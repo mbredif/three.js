@@ -91,7 +91,7 @@ ShaderMaterial.prototype.copy = function ( source ) {
 	this.fragmentShader = source.fragmentShader;
 	this.vertexShader = source.vertexShader;
 
-	this.uniforms = UniformsUtils.clone( source.uniforms );
+	UniformsUtils.copy( source.uniforms, this.uniforms );
 
 	this.defines = Object.assign( {}, source.defines );
 
