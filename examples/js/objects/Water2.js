@@ -85,17 +85,11 @@ THREE.Water = function ( geometry, options ) {
 	if ( flowMap !== undefined ) {
 
 		this.material.defines.USE_FLOWMAP = '';
-		this.material.uniforms.tFlowMap = {
-			type: 't',
-			value: flowMap
-		};
+		this.material.uniforms.tFlowMap = new THREE.Uniform( flowMap );
 
 	} else {
 
-		this.material.uniforms.flowDirection = {
-			type: 'v2',
-			value: flowDirection
-		};
+		this.material.uniforms.flowDirection = new THREE.Uniform( flowDirection );
 
 	}
 
@@ -192,45 +186,14 @@ THREE.Water.WaterShader = {
 
 	uniforms: {
 
-		'color': {
-			type: 'c',
-			value: null
-		},
-
-		'reflectivity': {
-			type: 'f',
-			value: 0
-		},
-
-		'tReflectionMap': {
-			type: 't',
-			value: null
-		},
-
-		'tRefractionMap': {
-			type: 't',
-			value: null
-		},
-
-		'tNormalMap0': {
-			type: 't',
-			value: null
-		},
-
-		'tNormalMap1': {
-			type: 't',
-			value: null
-		},
-
-		'textureMatrix': {
-			type: 'm4',
-			value: null
-		},
-
-		'config': {
-			type: 'v4',
-			value: new THREE.Vector4()
-		}
+		'color': new THREE.Uniform( null ),
+		'reflectivity': new THREE.Uniform( 0 ),
+		'tReflectionMap': new THREE.Uniform( null ),
+		'tRefractionMap': new THREE.Uniform( null ),
+		'tNormalMap0': new THREE.Uniform( null ),
+		'tNormalMap1': new THREE.Uniform( null ),
+		'textureMatrix': new THREE.Uniform( null ),
+		'config': new THREE.Uniform( new THREE.Vector4() )
 
 	},
 

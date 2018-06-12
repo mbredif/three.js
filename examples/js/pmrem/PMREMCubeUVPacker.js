@@ -134,10 +134,10 @@ THREE.PMREMCubeUVPacker.prototype = {
 		var shaderMaterial = new THREE.ShaderMaterial( {
 
 			uniforms: {
-				"faceIndex": { value: 0 },
-				"mapSize": { value: 0 },
-				"envMap": { value: null },
-				"testColor": { value: new THREE.Vector3( 1, 1, 1 ) }
+				"faceIndex": new THREE.Uniform( 0 ),
+				"mapSize": new THREE.Uniform( 0 ),
+				"envMap": new THREE.Uniform( null ),
+				"testColor": new THREE.Uniform( new THREE.Vector3( 1, 1, 1 ) )
 			},
 
 			vertexShader:

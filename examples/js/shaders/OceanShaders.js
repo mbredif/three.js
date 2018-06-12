@@ -34,9 +34,9 @@ THREE.ShaderLib[ 'ocean_sim_vertex' ] = {
 };
 THREE.ShaderLib[ 'ocean_subtransform' ] = {
 	uniforms: {
-		"u_input": { value: null },
-		"u_transformSize": { value: 512.0 },
-		"u_subtransformSize": { value: 250.0 }
+		"u_input": new THREE.Uniform( null ),
+		"u_transformSize": new THREE.Uniform( 512.0 ),
+		"u_subtransformSize": new THREE.Uniform( 250.0 )
 	},
 	fragmentShader: [
 		//GPU FFT using a Stockham formulation
@@ -84,9 +84,9 @@ THREE.ShaderLib[ 'ocean_subtransform' ] = {
 };
 THREE.ShaderLib[ 'ocean_initial_spectrum' ] = {
 	uniforms: {
-		"u_wind": { value: new THREE.Vector2( 10.0, 10.0 ) },
-		"u_resolution": { value: 512.0 },
-		"u_size": { value: 250.0 }
+		"u_wind": new THREE.Uniform( new THREE.Vector2( 10.0, 10.0 ) ),
+		"u_resolution": new THREE.Uniform( 512.0 ),
+		"u_size": new THREE.Uniform( 250.0 )
 	},
 	fragmentShader: [
 		'precision highp float;',
@@ -160,10 +160,10 @@ THREE.ShaderLib[ 'ocean_initial_spectrum' ] = {
 };
 THREE.ShaderLib[ 'ocean_phase' ] = {
 	uniforms: {
-		"u_phases": { value: null },
-		"u_deltaTime": { value: null },
-		"u_resolution": { value: null },
-		"u_size": { value: null }
+		"u_phases": new THREE.Uniform( null ),
+		"u_deltaTime": new THREE.Uniform( null ),
+		"u_resolution": new THREE.Uniform( null ),
+		"u_size": new THREE.Uniform( null )
 	},
 	fragmentShader: [
 		'precision highp float;',
@@ -200,11 +200,11 @@ THREE.ShaderLib[ 'ocean_phase' ] = {
 };
 THREE.ShaderLib[ 'ocean_spectrum' ] = {
 	uniforms: {
-		"u_size": { value: null },
-		"u_resolution": { value: null },
-		"u_choppiness": { value: null },
-		"u_phases": { value: null },
-		"u_initialSpectrum": { value: null }
+		"u_size": new THREE.Uniform( null ),
+		"u_resolution": new THREE.Uniform( null ),
+		"u_choppiness": new THREE.Uniform( null ),
+		"u_phases": new THREE.Uniform( null ),
+		"u_initialSpectrum": new THREE.Uniform( null )
 	},
 	fragmentShader: [
 		'precision highp float;',
@@ -264,9 +264,9 @@ THREE.ShaderLib[ 'ocean_spectrum' ] = {
 };
 THREE.ShaderLib[ 'ocean_normals' ] = {
 	uniforms: {
-		"u_displacementMap": { value: null },
-		"u_resolution": { value: null },
-		"u_size": { value: null }
+		"u_displacementMap": new THREE.Uniform( null ),
+		"u_resolution": new THREE.Uniform( null ),
+		"u_size": new THREE.Uniform( null )
 	},
 	fragmentShader: [
 		'precision highp float;',
@@ -298,17 +298,17 @@ THREE.ShaderLib[ 'ocean_normals' ] = {
 };
 THREE.ShaderLib[ 'ocean_main' ] = {
 	uniforms: {
-		"u_displacementMap": { value: null },
-		"u_normalMap": { value: null },
-		"u_geometrySize": { value: null },
-		"u_size": { value: null },
-		"u_projectionMatrix": { value: null },
-		"u_viewMatrix": { value: null },
-		"u_cameraPosition": { value: null },
-		"u_skyColor": { value: null },
-		"u_oceanColor": { value: null },
-		"u_sunDirection": { value: null },
-		"u_exposure": { value: null }
+		"u_displacementMap": new THREE.Uniform( null ),
+		"u_normalMap": new THREE.Uniform( null ),
+		"u_geometrySize": new THREE.Uniform( null ),
+		"u_size": new THREE.Uniform( null ),
+		"u_projectionMatrix": new THREE.Uniform( null ),
+		"u_viewMatrix": new THREE.Uniform( null ),
+		"u_cameraPosition": new THREE.Uniform( null ),
+		"u_skyColor": new THREE.Uniform( null ),
+		"u_oceanColor": new THREE.Uniform( null ),
+		"u_sunDirection": new THREE.Uniform( null ),
+		"u_exposure": new THREE.Uniform( null )
 	},
 	vertexShader: [
 		'precision highp float;',

@@ -115,7 +115,7 @@
 				var geometry = new THREE.PlaneBufferGeometry( 2, 2 );
 
 				uniforms = {
-					time: { value: 1.0 }
+					time: new THREE.Uniform( 1.0 )
 				};
 
 				var material = new THREE.ShaderMaterial( {

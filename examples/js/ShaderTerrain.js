@@ -22,32 +22,32 @@ THREE.ShaderTerrain = {
 
 			{
 
-				"enableDiffuse1": { value: 0 },
-				"enableDiffuse2": { value: 0 },
-				"enableSpecular": { value: 0 },
-				"enableReflection": { value: 0 },
+				"enableDiffuse1": new THREE.Uniform( 0 ),
+				"enableDiffuse2": new THREE.Uniform( 0 ),
+				"enableSpecular": new THREE.Uniform( 0 ),
+				"enableReflection": new THREE.Uniform( 0 ),
 
-				"tDiffuse1": { value: null },
-				"tDiffuse2": { value: null },
-				"tDetail": { value: null },
-				"tNormal": { value: null },
-				"tSpecular": { value: null },
-				"tDisplacement": { value: null },
+				"tDiffuse1": new THREE.Uniform( null ),
+				"tDiffuse2": new THREE.Uniform( null ),
+				"tDetail": new THREE.Uniform( null ),
+				"tNormal": new THREE.Uniform( null ),
+				"tSpecular": new THREE.Uniform( null ),
+				"tDisplacement": new THREE.Uniform( null ),
 
-				"uNormalScale": { value: 1.0 },
+				"uNormalScale": new THREE.Uniform( 1.0 ),
 
-				"uDisplacementBias": { value: 0.0 },
-				"uDisplacementScale": { value: 1.0 },
+				"uDisplacementBias": new THREE.Uniform( 0.0 ),
+				"uDisplacementScale": new THREE.Uniform( 1.0 ),
 
-				"diffuse": { value: new THREE.Color( 0xeeeeee ) },
-				"specular": { value: new THREE.Color( 0x111111 ) },
-				"shininess": { value: 30 },
-				"opacity": { value: 1 },
+				"diffuse": new THREE.Uniform( new THREE.Color( 0xeeeeee ) ),
+				"specular": new THREE.Uniform( new THREE.Color( 0x111111 ) ),
+				"shininess": new THREE.Uniform( 30 ),
+				"opacity": new THREE.Uniform( 1 ),
 
-				"uRepeatBase": { value: new THREE.Vector2( 1, 1 ) },
-				"uRepeatOverlay": { value: new THREE.Vector2( 1, 1 ) },
+				"uRepeatBase": new THREE.Uniform( new THREE.Vector2( 1, 1 ) ),
+				"uRepeatOverlay": new THREE.Uniform( new THREE.Vector2( 1, 1 ) ),
 
-				"uOffset": { value: new THREE.Vector2( 0, 0 ) }
+				"uOffset": new THREE.Uniform( new THREE.Vector2( 0, 0 ) )
 
 			}
 

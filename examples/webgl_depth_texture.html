@@ -166,10 +166,10 @@
 					vertexShader: document.querySelector( '#post-vert' ).textContent.trim(),
 					fragmentShader: document.querySelector( '#post-frag' ).textContent.trim(),
 					uniforms: {
-						cameraNear: { value: camera.near },
-						cameraFar:  { value: camera.far },
-						tDiffuse:   { value: target.texture },
-						tDepth:     { value: target.depthTexture }
+						cameraNear: new THREE.Uniform( camera.near ),
+						cameraFar:  new THREE.Uniform( camera.far ),
+						tDiffuse:   new THREE.Uniform( target.texture ),
+						tDepth:     new THREE.Uniform( target.depthTexture )
 					}
 				});
 				var postPlane = new THREE.PlaneBufferGeometry( 2, 2 );

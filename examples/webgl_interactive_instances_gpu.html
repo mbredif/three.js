@@ -552,9 +552,7 @@
 				vertexShader: vert,
 				fragmentShader: frag,
 				uniforms: {
-					color: {
-						value: new THREE.Color()
-					}
+					color: new THREE.Uniform( new THREE.Color() )
 				}
 			} );
 
@@ -562,9 +560,7 @@
 				vertexShader: "#define PICKING\n" + vert,
 				fragmentShader: "#define PICKING\n" + frag,
 				uniforms: {
-					pickingColor: {
-						value: new THREE.Color()
-					}
+					pickingColor: new THREE.Uniform( new THREE.Color() )
 				}
 			} );
 
@@ -612,9 +608,7 @@
 				vertexShader: vert,
 				fragmentShader: frag,
 				uniforms: {
-					color: {
-						value: new THREE.Color()
-					}
+					color: new THREE.Uniform( new THREE.Color() )
 				}
 			} );
 			materialList.push( material );
@@ -623,9 +617,7 @@
 				vertexShader: "#define PICKING\n" + vert,
 				fragmentShader: "#define PICKING\n" + frag,
 				uniforms: {
-					pickingColor: {
-						value: new THREE.Color()
-					}
+					pickingColor: new THREE.Uniform( new THREE.Color() )
 				}
 			} );
 			materialList.push( pickingMaterial );

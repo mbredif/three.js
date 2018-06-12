@@ -8,10 +8,10 @@ THREE.BlendShader = {
 
 	uniforms: {
 
-		"tDiffuse1": { value: null },
-		"tDiffuse2": { value: null },
-		"mixRatio":  { value: 0.5 },
-		"opacity":   { value: 1.0 }
+		"tDiffuse1": new THREE.Uniform( null ),
+		"tDiffuse2": new THREE.Uniform( null ),
+		"mixRatio":  new THREE.Uniform( 0.5 ),
+		"opacity":   new THREE.Uniform( 1.0 )
 
 	},
 

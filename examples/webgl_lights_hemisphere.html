@@ -162,10 +162,10 @@
 				var vertexShader = document.getElementById( 'vertexShader' ).textContent;
 				var fragmentShader = document.getElementById( 'fragmentShader' ).textContent;
 				var uniforms = {
-					topColor:    { value: new THREE.Color( 0x0077ff ) },
-					bottomColor: { value: new THREE.Color( 0xffffff ) },
-					offset:      { value: 33 },
-					exponent:    { value: 0.6 }
+					topColor:    new THREE.Uniform( new THREE.Color( 0x0077ff ) ),
+					bottomColor: new THREE.Uniform( new THREE.Color( 0xffffff ) ),
+					offset:      new THREE.Uniform( 33 ),
+					exponent:    new THREE.Uniform( 0.6 )
 				};
 				uniforms.topColor.value.copy( hemiLight.color );
 

@@ -105,9 +105,9 @@
 
 			uniforms = {
 
-				amplitude: { value: 1.0 },
-				color:     { value: new THREE.Color( 0xff2200 ) },
-				texture:   { value: new THREE.TextureLoader().load( "textures/water.jpg" ) }
+				amplitude: new THREE.Uniform( 1.0 ),
+				color:     new THREE.Uniform( new THREE.Color( 0xff2200 ) ),
+				texture:   new THREE.Uniform( new THREE.TextureLoader().load( "textures/water.jpg" ) )
 
 			};
 

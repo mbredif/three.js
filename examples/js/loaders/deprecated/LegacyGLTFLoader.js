@@ -1373,11 +1373,10 @@ THREE.LegacyGLTFLoader = ( function () {
 
 								}
 
-								materialParams.uniforms[ uniformId ] = {
-									value: uvalue,
-									semantic: usemantic,
-									node: unode
-								};
+								var uniform = new THREE.Uniform( uvalue );
+								uniform.semantic = usemantic;
+								uniform.node = unode;
+								materialParams.uniforms[ uniformId ] = uniform;
 
 							} else {
 

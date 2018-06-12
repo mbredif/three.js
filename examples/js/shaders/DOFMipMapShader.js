@@ -10,10 +10,10 @@ THREE.DOFMipMapShader = {
 
 	uniforms: {
 
-		"tColor":   { value: null },
-		"tDepth":   { value: null },
-		"focus":    { value: 1.0 },
-		"maxblur":  { value: 1.0 }
+		"tColor":   new THREE.Uniform( null ),
+		"tDepth":   new THREE.Uniform( null ),
+		"focus":    new THREE.Uniform( 1.0 ),
+		"maxblur":  new THREE.Uniform( 1.0 )
 
 	},
 

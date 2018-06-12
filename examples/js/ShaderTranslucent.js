@@ -18,20 +18,20 @@ THREE.TranslucentShader = function TranslucentShader() {
 		THREE.UniformsLib[ "lights" ],
 
 		{
-			"color":  { value: new THREE.Color( 0xffffff ) },
-			"diffuse":  { value: new THREE.Color( 0xffffff ) },
-			"specular": { value: new THREE.Color( 0xffffff ) },
-			"emissive": { value: new THREE.Color( 0x000000 ) },
-			"opacity": { value: 1 },
-			"shininess": { value: 1 },
+			"color":  new THREE.Uniform( new THREE.Color( 0xffffff ) ),
+			"diffuse":  new THREE.Uniform( new THREE.Color( 0xffffff ) ),
+			"specular": new THREE.Uniform( new THREE.Color( 0xffffff ) ),
+			"emissive": new THREE.Uniform( new THREE.Color( 0x000000 ) ),
+			"opacity": new THREE.Uniform( 1 ),
+			"shininess": new THREE.Uniform( 1 ),
 
-			"thicknessMap": { value: null },
-			"thicknessColor": { value: new THREE.Color( 0xffffff ) },
-			"thicknessDistortion": { value: 0.1 },
-			"thicknessAmbient": { value: 0.0 },
-			"thicknessAttenuation": { value: 0.1 },
-			"thicknessPower": { value: 2.0 },
-			"thicknessScale": { value: 10.0 }
+			"thicknessMap": new THREE.Uniform( null ),
+			"thicknessColor": new THREE.Uniform( new THREE.Color( 0xffffff ) ),
+			"thicknessDistortion": new THREE.Uniform( 0.1 ),
+			"thicknessAmbient": new THREE.Uniform( 0.0 ),
+			"thicknessAttenuation": new THREE.Uniform( 0.1 ),
+			"thicknessPower": new THREE.Uniform( 2.0 ),
+			"thicknessScale": new THREE.Uniform( 10.0 )
 		}
 
 	] );

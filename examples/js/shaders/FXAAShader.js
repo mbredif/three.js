@@ -12,8 +12,8 @@ THREE.FXAAShader = {
 
 	uniforms: {
 
-		"tDiffuse":   { value: null },
-		"resolution": { value: new THREE.Vector2( 1 / 1024, 1 / 512 ) }
+		"tDiffuse":   new THREE.Uniform( null ),
+		"resolution": new THREE.Uniform( new THREE.Vector2( 1 / 1024, 1 / 512 ) )
 
 	},
 

@@ -39,7 +39,7 @@
 
 	// add ltc data textures to material uniforms
 
-	var ltc = { ltc_1: { value: null }, ltc_2: { value: null } };
+	var ltc = { ltc_1: new THREE.Uniform( null ), ltc_2: new THREE.Uniform( null ) };
 
 	Object.assign( THREE.ShaderLib.standard.uniforms, ltc );
 	Object.assign( THREE.ShaderLib.physical.uniforms, ltc );

@@ -187,12 +187,12 @@
 				var geometry = new THREE.BoxBufferGeometry( 0.75, 0.75, 0.75 );
 
 				uniforms1 = {
-					time: { value: 1.0 }
+					time: new THREE.Uniform( 1.0 )
 				};
 
 				uniforms2 = {
-					time: { value: 1.0 },
-					texture: { value: new THREE.TextureLoader().load( 'textures/disturb.jpg' ) }
+					time: new THREE.Uniform( 1.0 ),
+					texture: new THREE.Uniform( new THREE.TextureLoader().load( 'textures/disturb.jpg' ) )
 				};
 
 				uniforms2.texture.value.wrapS = uniforms2.texture.value.wrapT = THREE.RepeatWrapping;

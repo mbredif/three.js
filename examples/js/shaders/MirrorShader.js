@@ -11,8 +11,8 @@ THREE.MirrorShader = {
 
 	uniforms: {
 
-		"tDiffuse": { value: null },
-		"side":     { value: 1 }
+		"tDiffuse": new THREE.Uniform( null ),
+		"side":     new THREE.Uniform( 1 )
 
 	},
 

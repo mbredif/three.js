@@ -9,10 +9,10 @@ THREE.NormalMapShader = {
 
 	uniforms: {
 
-		"heightMap":  { value: null },
-		"resolution": { value: new THREE.Vector2( 512, 512 ) },
-		"scale":      { value: new THREE.Vector2( 1, 1 ) },
-		"height":     { value: 0.05 }
+		"heightMap":  new THREE.Uniform( null ),
+		"resolution": new THREE.Uniform( new THREE.Vector2( 512, 512 ) ),
+		"scale":      new THREE.Uniform( new THREE.Vector2( 1, 1 ) ),
+		"height":     new THREE.Uniform( 0.05 )
 
 	},
 

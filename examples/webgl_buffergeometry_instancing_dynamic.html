@@ -183,7 +183,7 @@
 			var material = new THREE.RawShaderMaterial( {
 
 				uniforms: {
-					map: { value: new THREE.TextureLoader().load( 'textures/crate.gif' ) }
+					map: new THREE.Uniform( new THREE.TextureLoader().load( 'textures/crate.gif' ) )
 				},
 				vertexShader: document.getElementById( 'vertexShader' ).textContent,
 				fragmentShader: document.getElementById( 'fragmentShader' ).textContent

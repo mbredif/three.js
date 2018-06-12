@@ -9,7 +9,7 @@ THREE.LuminosityShader = {
 
 	uniforms: {
 
-		"tDiffuse": { value: null }
+		"tDiffuse": new THREE.Uniform( null )
 
 	},
 

@@ -13,9 +13,9 @@ THREE.HorizontalTiltShiftShader = {
 
 	uniforms: {
 
-		"tDiffuse": { value: null },
-		"h":        { value: 1.0 / 512.0 },
-		"r":        { value: 0.35 }
+		"tDiffuse": new THREE.Uniform( null ),
+		"h":        new THREE.Uniform( 1.0 / 512.0 ),
+		"r":        new THREE.Uniform( 0.35 )
 
 	},
 

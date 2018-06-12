@@ -11,8 +11,8 @@ THREE.FreiChenShader = {
 
 	uniforms: {
 
-		"tDiffuse": { value: null },
-		"aspect":    { value: new THREE.Vector2( 512, 512 ) }
+		"tDiffuse": new THREE.Uniform( null ),
+		"aspect":   new THREE.Uniform( new THREE.Vector2( 512, 512 ) )
 	},
 
 	vertexShader: [

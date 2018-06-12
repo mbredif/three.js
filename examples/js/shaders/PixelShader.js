@@ -8,9 +8,9 @@ THREE.PixelShader = {
 
 	uniforms: {
 
-		"tDiffuse": { value: null },
-		"resolution": { value: null },
-		"pixelSize": { value: 1. },
+		"tDiffuse": new THREE.Uniform( null ),
+		"resolution": new THREE.Uniform( null ),
+		"pixelSize": new THREE.Uniform( 1. ),
 
 	},
 

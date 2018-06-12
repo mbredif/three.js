@@ -13,9 +13,9 @@ THREE.VerticalTiltShiftShader = {
 
 	uniforms: {
 
-		"tDiffuse": { value: null },
-		"v":        { value: 1.0 / 512.0 },
-		"r":        { value: 0.35 }
+		"tDiffuse": new THREE.Uniform( null ),
+		"v":        new THREE.Uniform( 1.0 / 512.0 ),
+		"r":        new THREE.Uniform( 0.35 )
 
 	},
 

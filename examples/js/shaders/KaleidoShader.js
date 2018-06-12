@@ -14,9 +14,9 @@ THREE.KaleidoShader = {
 
 	uniforms: {
 
-		"tDiffuse": { value: null },
-		"sides":    { value: 6.0 },
-		"angle":    { value: 0.0 }
+		"tDiffuse": new THREE.Uniform( null ),
+		"sides":    new THREE.Uniform( 6.0 ),
+		"angle":    new THREE.Uniform( 0.0 )
 
 	},
 

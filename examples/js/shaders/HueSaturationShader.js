@@ -11,9 +11,9 @@ THREE.HueSaturationShader = {
 
 	uniforms: {
 
-		"tDiffuse":   { value: null },
-		"hue":        { value: 0 },
-		"saturation": { value: 0 }
+		"tDiffuse":   new THREE.Uniform( null ),
+		"hue":        new THREE.Uniform( 0 ),
+		"saturation": new THREE.Uniform( 0 )
 
 	},
 

@@ -11,7 +11,7 @@ THREE.TechnicolorShader = {
 
 	uniforms: {
 
-		"tDiffuse": { value: null }
+		"tDiffuse": new THREE.Uniform( null )
 
 	},
 

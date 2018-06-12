@@ -14,11 +14,11 @@
 
 THREE.UniformsLib.line = {
 
-	linewidth: { value: 1 },
-	resolution: { value: new THREE.Vector2( 1, 1 ) },
-	dashScale: { value: 1 },
-	dashSize: { value: 1 },
-	gapSize: { value: 1 } // todo FIX - maybe change to totalSize
+	linewidth: new THREE.Uniform( 1 ),
+	resolution: new THREE.Uniform( new THREE.Vector2( 1, 1 ) ),
+	dashScale: new THREE.Uniform( 1 ),
+	dashSize: new THREE.Uniform( 1 ),
+	gapSize: new THREE.Uniform( 1 ) // todo FIX - maybe change to totalSize
 
 };
 

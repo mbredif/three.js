@@ -24,9 +24,7 @@ THREE.ShaderGodRays = {
 
 		uniforms: {
 
-			tInput: {
-				value: null
-			}
+			tInput: new THREE.Uniform( null )
 
 		},
 
@@ -80,15 +78,9 @@ THREE.ShaderGodRays = {
 
 		uniforms: {
 
-			tInput: {
-				value: null
-			},
-			fStepSize: {
-				value: 1.0
-			},
-			vSunPositionScreenSpace: {
-				value: new THREE.Vector2( 0.5, 0.5 )
-			}
+			tInput: new THREE.Uniform( null ),
+			fStepSize: new THREE.Uniform( 1.0 ),
+			vSunPositionScreenSpace: new THREE.Uniform( new THREE.Vector2( 0.5, 0.5 ) )
 
 		},
 
@@ -202,21 +194,10 @@ THREE.ShaderGodRays = {
 
 		uniforms: {
 
-			tColors: {
-				value: null
-			},
-
-			tGodRays: {
-				value: null
-			},
-
-			fGodRayIntensity: {
-				value: 0.69
-			},
-
-			vSunPositionScreenSpace: {
-				value: new THREE.Vector2( 0.5, 0.5 )
-			}
+			tColors: new THREE.Uniform( null ),
+			tGodRays: new THREE.Uniform( null ),
+			fGodRayIntensity: new THREE.Uniform( 0.69 ),
+			vSunPositionScreenSpace: new THREE.Uniform( new THREE.Vector2( 0.5, 0.5 ) )
 
 		},
 
@@ -268,21 +249,10 @@ THREE.ShaderGodRays = {
 
 		uniforms: {
 
-			vSunPositionScreenSpace: {
-				value: new THREE.Vector2( 0.5, 0.5 )
-			},
-
-			fAspect: {
-				value: 1.0
-			},
-
-			sunColor: {
-				value: new THREE.Color( 0xffee00 )
-			},
-
-			bgColor: {
-				value: new THREE.Color( 0x000000 )
-			}
+			vSunPositionScreenSpace: new THREE.Uniform( new THREE.Vector2( 0.5, 0.5 ) ),
+			fAspect: new THREE.Uniform( 1.0 ),
+			sunColor: new THREE.Uniform( new THREE.Color( 0xffee00 ) ),
+			bgColor: new THREE.Uniform( new THREE.Color( 0x000000 ) )
 
 		},
 

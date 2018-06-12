@@ -24,12 +24,12 @@ THREE.FilmShader = {
 
 	uniforms: {
 
-		"tDiffuse":   { value: null },
-		"time":       { value: 0.0 },
-		"nIntensity": { value: 0.5 },
-		"sIntensity": { value: 0.05 },
-		"sCount":     { value: 4096 },
-		"grayscale":  { value: 1 }
+		"tDiffuse":   new THREE.Uniform( null ),
+		"time":       new THREE.Uniform( 0.0 ),
+		"nIntensity": new THREE.Uniform( 0.5 ),
+		"sIntensity": new THREE.Uniform( 0.05 ),
+		"sCount":     new THREE.Uniform( 4096 ),
+		"grayscale":  new THREE.Uniform( 1 )
 
 	},
 

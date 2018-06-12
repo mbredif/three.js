@@ -145,9 +145,9 @@
 			var material = new THREE.ShaderMaterial( {
 
 				uniforms: {
-					amplitude: { value: 1.0 },
-					color:     { value: new THREE.Color( 0xffffff ) },
-					texture:   { value: texture }
+					amplitude: new THREE.Uniform( 1.0 ),
+					color:     new THREE.Uniform( new THREE.Color( 0xffffff ) ),
+					texture:   new THREE.Uniform( texture )
 				},
 				vertexShader:   document.getElementById( 'vertexshader' ).textContent,
 				fragmentShader: document.getElementById( 'fragmentshader' ).textContent,

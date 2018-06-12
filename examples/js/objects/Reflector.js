@@ -205,20 +205,9 @@ THREE.Reflector.ReflectorShader = {
 
 	uniforms: {
 
-		'color': {
-			type: 'c',
-			value: null
-		},
-
-		'tDiffuse': {
-			type: 't',
-			value: null
-		},
-
-		'textureMatrix': {
-			type: 'm4',
-			value: null
-		}
+		'color': new THREE.Uniform( null ),
+		'tDiffuse': new THREE.Uniform( null ),
+		'textureMatrix': new THREE.Uniform( null )
 
 	},
 

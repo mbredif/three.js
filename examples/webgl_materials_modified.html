@@ -80,7 +80,7 @@
 
 					// console.log( shader )
 
-					shader.uniforms.time = { value: 0 };
+					shader.uniforms.time = new THREE.Uniform( 0 );
 
 					shader.vertexShader = 'uniform float time;\n' + shader.vertexShader;
 					shader.vertexShader = shader.vertexShader.replace(

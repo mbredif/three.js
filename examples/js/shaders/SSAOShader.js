@@ -15,15 +15,15 @@ THREE.SSAOShader = {
 
 	uniforms: {
 
-		"tDiffuse":     { value: null },
-		"tDepth":       { value: null },
-		"size":         { value: new THREE.Vector2( 512, 512 ) },
-		"cameraNear":   { value: 1 },
-		"cameraFar":    { value: 100 },
-		"radius":       { value: 32 },
-		"onlyAO":       { value: 0 },
-		"aoClamp":      { value: 0.25 },
-		"lumInfluence": { value: 0.7 }
+		"tDiffuse":     new THREE.Uniform( null ),
+		"tDepth":       new THREE.Uniform( null ),
+		"size":         new THREE.Uniform( new THREE.Vector2( 512, 512 ) ),
+		"cameraNear":   new THREE.Uniform( 1 ),
+		"cameraFar":    new THREE.Uniform( 100 ),
+		"radius":       new THREE.Uniform( 32 ),
+		"onlyAO":       new THREE.Uniform( 0 ),
+		"aoClamp":      new THREE.Uniform( 0.25 ),
+		"lumInfluence": new THREE.Uniform( 0.7 )
 
 	},
 

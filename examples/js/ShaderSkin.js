@@ -29,27 +29,27 @@ THREE.ShaderSkin = {
 
 			{
 
-				"enableBump": { value: 0 },
-				"enableSpecular": { value: 0 },
+				"enableBump": new THREE.Uniform( 0 ),
+				"enableSpecular": new THREE.Uniform( 0 ),
 
-				"tDiffuse": { value: null },
-				"tBeckmann": { value: null },
+				"tDiffuse": new THREE.Uniform( null ),
+				"tBeckmann": new THREE.Uniform( null ),
 
-				"diffuse": { value: new THREE.Color( 0xeeeeee ) },
-				"specular": { value: new THREE.Color( 0x111111 ) },
-				"opacity": { value: 1 },
+				"diffuse": new THREE.Uniform( new THREE.Color( 0xeeeeee ) ),
+				"specular": new THREE.Uniform( new THREE.Color( 0x111111 ) ),
+				"opacity": new THREE.Uniform( 1 ),
 
-				"uRoughness": { value: 0.15 },
-				"uSpecularBrightness": { value: 0.75 },
+				"uRoughness": new THREE.Uniform( 0.15 ),
+				"uSpecularBrightness": new THREE.Uniform( 0.75 ),
 
-				"bumpMap": { value: null },
-				"bumpScale": { value: 1 },
+				"bumpMap": new THREE.Uniform( null ),
+				"bumpScale": new THREE.Uniform( 1 ),
 
-				"specularMap": { value: null },
+				"specularMap": new THREE.Uniform( null ),
 
-				"offsetRepeat": { value: new THREE.Vector4( 0, 0, 1, 1 ) },
+				"offsetRepeat": new THREE.Uniform( new THREE.Vector4( 0, 0, 1, 1 ) ),
 
-				"uWrapRGB": { value: new THREE.Vector3( 0.75, 0.375, 0.1875 ) }
+				"uWrapRGB": new THREE.Uniform( new THREE.Vector3( 0.75, 0.375, 0.1875 ) )
 
 			}
 
@@ -314,26 +314,26 @@ THREE.ShaderSkin = {
 
 			{
 
-				"passID": { value: 0 },
+				"passID": new THREE.Uniform( 0 ),
 
-				"tDiffuse"	: { value: null },
-				"tNormal"	: { value: null },
+				"tDiffuse"	: new THREE.Uniform( null ),
+				"tNormal"	: new THREE.Uniform( null ),
 
-				"tBlur1"	: { value: null },
-				"tBlur2"	: { value: null },
-				"tBlur3"	: { value: null },
-				"tBlur4"	: { value: null },
+				"tBlur1"	: new THREE.Uniform( null ),
+				"tBlur2"	: new THREE.Uniform( null ),
+				"tBlur3"	: new THREE.Uniform( null ),
+				"tBlur4"	: new THREE.Uniform( null ),
 
-				"tBeckmann"	: { value: null },
+				"tBeckmann"	: new THREE.Uniform( null ),
 
-				"uNormalScale": { value: 1.0 },
+				"uNormalScale": new THREE.Uniform( 1.0 ),
 
-				"diffuse":  { value: new THREE.Color( 0xeeeeee ) },
-				"specular": { value: new THREE.Color( 0x111111 ) },
-				"opacity": 	  { value: 1 },
+				"diffuse":  new THREE.Uniform( new THREE.Color( 0xeeeeee ) ),
+				"specular": new THREE.Uniform( new THREE.Color( 0x111111 ) ),
+				"opacity": 	  new THREE.Uniform( 1 ),
 
-				"uRoughness": 	  		{ value: 0.15 },
-				"uSpecularBrightness": 	{ value: 0.75 }
+				"uRoughness": 	  		new THREE.Uniform( 0.15 ),
+				"uSpecularBrightness": 	new THREE.Uniform( 0.75 )
 
 			}
 

@@ -10,19 +10,19 @@
 THREE.HalftoneShader = {
 
 	uniforms: {
-		"tDiffuse": { value: null },
-		"shape": { value: 1 },
-		"radius": { value: 4 },
-		"rotateR": { value: Math.PI / 12 * 1 },
-		"rotateG": { value: Math.PI / 12 * 2 },
-		"rotateB": { value: Math.PI / 12 * 3 },
-		"scatter": { value: 0 },
-		"width": { value: 1 },
-		"height": { value: 1 },
-		"blending": { value: 1 },
-		"blendingMode": { value: 1 },
-		"greyscale": { value: false },
-		"disable": { value: false }
+		"tDiffuse": new THREE.Uniform( null ),
+		"shape": new THREE.Uniform( 1 ),
+		"radius": new THREE.Uniform( 4 ),
+		"rotateR": new THREE.Uniform( Math.PI / 12 * 1 ),
+		"rotateG": new THREE.Uniform( Math.PI / 12 * 2 ),
+		"rotateB": new THREE.Uniform( Math.PI / 12 * 3 ),
+		"scatter": new THREE.Uniform( 0 ),
+		"width": new THREE.Uniform( 1 ),
+		"height": new THREE.Uniform( 1 ),
+		"blending": new THREE.Uniform( 1 ),
+		"blendingMode": new THREE.Uniform( 1 ),
+		"greyscale": new THREE.Uniform( false ),
+		"disable": new THREE.Uniform( false )
 	},
 
 	vertexShader: [

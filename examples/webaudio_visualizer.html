@@ -167,7 +167,7 @@
 
 		uniforms = {
 
-			tAudioData: { value: new THREE.DataTexture( analyser.data, fftSize / 2, 1, THREE.LuminanceFormat ) }
+			tAudioData: new THREE.Uniform( new THREE.DataTexture( analyser.data, fftSize / 2, 1, THREE.LuminanceFormat ) )
 
 		};
 

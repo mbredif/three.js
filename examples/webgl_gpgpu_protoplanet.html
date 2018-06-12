@@ -389,8 +389,8 @@
 				positionUniforms = positionVariable.material.uniforms;
 				velocityUniforms = velocityVariable.material.uniforms;
 
-				velocityUniforms.gravityConstant = { value: 0.0 };
-				velocityUniforms.density = { value: 0.0 };
+				velocityUniforms.gravityConstant = new THREE.Uniform( 0.0 );
+				velocityUniforms.density = new THREE.Uniform( 0.0 );
 
 				var error = gpuCompute.init();
 
@@ -449,10 +449,10 @@
 				geometry.addAttribute( 'uv', new THREE.BufferAttribute( uvs, 2 ) );
 
 				particleUniforms = {
-					texturePosition: { value: null },
-					textureVelocity: { value: null },
-					cameraConstant: { value: getCameraConstant( camera ) },
-					density: { value: 0.0 }
+					texturePosition: new THREE.Uniform( null ),
+					textureVelocity: new THREE.Uniform( null ),
+					cameraConstant: new THREE.Uniform( getCameraConstant( camera ) ),
+					density: new THREE.Uniform( 0.0 )
 				};
 
 				// ShaderMaterial

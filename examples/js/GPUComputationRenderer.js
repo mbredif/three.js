@@ -44,7 +44,7 @@
  * gpuCompute.setVariableDependencies( posVar, [ velVar, posVar ] );
  *
  * // Add custom uniforms
- * velVar.material.uniforms.time = { value: 0.0 };
+ * velVar.material.uniforms.time = new THREE.Uniform( 0.0 );
  *
  * // Check for completeness
  * var error = gpuCompute.init();
@@ -69,8 +69,8 @@
  * Also, you can use utility functions to create ShaderMaterial and perform computations (rendering between textures)
  * Note that the shaders can have multiple input textures.
  *
- * var myFilter1 = gpuCompute.createShaderMaterial( myFilterFragmentShader1, { theTexture: { value: null } } );
- * var myFilter2 = gpuCompute.createShaderMaterial( myFilterFragmentShader2, { theTexture: { value: null } } );
+ * var myFilter1 = gpuCompute.createShaderMaterial( myFilterFragmentShader1, { theTexture: new THREE.Uniform( null ) } );
+ * var myFilter2 = gpuCompute.createShaderMaterial( myFilterFragmentShader2, { theTexture: new THREE.Uniform( null ) } );
  *
  * var inputTexture = gpuCompute.createTexture();
  *
@@ -109,7 +109,7 @@ function GPUComputationRenderer( sizeX, sizeY, renderer ) {
 	camera.position.z = 1;
 
 	var passThruUniforms = {
-		texture: { value: null }
+		texture: new THREE.Uniform( null )
 	};
 
 	var passThruShader = createShaderMaterial( getPassThroughFragmentShader(), passThruUniforms );
@@ -197,7 +197,7 @@ function GPUComputationRenderer( sizeX, sizeY, renderer ) {
 
 					}
 
-					uniforms[ depVar.name ] = { value: null };
+					uniforms[ depVar.name ] = new THREE.Uniform( null );
 
 					material.fragmentShader = "\nuniform sampler2D " + depVar.name + ";\n" + material.fragmentShader;
 

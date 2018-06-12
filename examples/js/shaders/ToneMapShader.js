@@ -8,12 +8,12 @@ THREE.ToneMapShader = {
 
 	uniforms: {
 
-		"tDiffuse": { value: null },
-		"averageLuminance":  { value: 1.0 },
-		"luminanceMap":  { value: null },
-		"maxLuminance":  { value: 16.0 },
-		"minLuminance":  { value: 0.01 },
-		"middleGrey":  { value: 0.6 }
+		"tDiffuse": new THREE.Uniform( null ),
+		"averageLuminance":  new THREE.Uniform( 1.0 ),
+		"luminanceMap":  new THREE.Uniform( null ),
+		"maxLuminance":  new THREE.Uniform( 16.0 ),
+		"minLuminance":  new THREE.Uniform( 0.01 ),
+		"middleGrey":  new THREE.Uniform( 0.6 )
 	},
 
 	vertexShader: [

@@ -14,37 +14,37 @@ THREE.BokehShader = {
 
 	uniforms: {
 
-		"textureWidth":  { value: 1.0 },
-		"textureHeight":  { value: 1.0 },
+		"textureWidth":  new THREE.Uniform( 1.0 ),
+		"textureHeight":  new THREE.Uniform( 1.0 ),
 
-		"focalDepth":   { value: 1.0 },
-		"focalLength":   { value: 24.0 },
-		"fstop": { value: 0.9 },
+		"focalDepth":   new THREE.Uniform( 1.0 ),
+		"focalLength":   new THREE.Uniform( 24.0 ),
+		"fstop": new THREE.Uniform( 0.9 ),
 
-		"tColor":   { value: null },
-		"tDepth":   { value: null },
+		"tColor":   new THREE.Uniform( null ),
+		"tDepth":   new THREE.Uniform( null ),
 
-		"maxblur":  { value: 1.0 },
+		"maxblur":  new THREE.Uniform( 1.0 ),
 
-		"showFocus":   { value: 0 },
-		"manualdof":   { value: 0 },
-		"vignetting":   { value: 0 },
-		"depthblur":   { value: 0 },
+		"showFocus":   new THREE.Uniform( 0 ),
+		"manualdof":   new THREE.Uniform( 0 ),
+		"vignetting":   new THREE.Uniform( 0 ),
+		"depthblur":   new THREE.Uniform( 0 ),
 
-		"threshold":  { value: 0.5 },
-		"gain":  { value: 2.0 },
-		"bias":  { value: 0.5 },
-		"fringe":  { value: 0.7 },
+		"threshold":  new THREE.Uniform( 0.5 ),
+		"gain":  new THREE.Uniform( 2.0 ),
+		"bias":  new THREE.Uniform( 0.5 ),
+		"fringe":  new THREE.Uniform( 0.7 ),
 
-		"znear":  { value: 0.1 },
-		"zfar":  { value: 100 },
+		"znear":  new THREE.Uniform( 0.1 ),
+		"zfar":  new THREE.Uniform( 100 ),
 
-		"noise":  { value: 1 },
-		"dithering":  { value: 0.0001 },
-		"pentagon": { value: 0 },
+		"noise":  new THREE.Uniform( 1 ),
+		"dithering":  new THREE.Uniform( 0.0001 ),
+		"pentagon": new THREE.Uniform( 0 ),
 
-		"shaderFocus":  { value: 1 },
-		"focusCoords":  { value: new THREE.Vector2() }
+		"shaderFocus":  new THREE.Uniform( 1 ),
+		"focusCoords":  new THREE.Uniform( new THREE.Vector2() )
 
 
 	},
@@ -360,8 +360,8 @@ THREE.BokehDepthShader = {
 
 	uniforms: {
 
-		"mNear": { value: 1.0 },
-		"mFar": { value: 1000.0 },
+		"mNear": new THREE.Uniform( 1.0 ),
+		"mFar": new THREE.Uniform( 1000.0 ),
 
 	},
 

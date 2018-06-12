@@ -182,18 +182,10 @@ THREE.GPUParticleSystem = function ( options ) {
 		transparent: true,
 		depthWrite: false,
 		uniforms: {
-			'uTime': {
-				value: 0.0
-			},
-			'uScale': {
-				value: 1.0
-			},
-			'tNoise': {
-				value: this.particleNoiseTex
-			},
-			'tSprite': {
-				value: this.particleSpriteTex
-			}
+			'uTime': new THREE.Uniform( 0.0 ),
+			'uScale': new THREE.Uniform( 1.0 ),
+			'tNoise': new THREE.Uniform( this.particleNoiseTex ),
+			'tSprite': new THREE.Uniform( this.particleSpriteTex )
 		},
 		blending: THREE.AdditiveBlending,
 		vertexShader: GPUParticleShader.vertexShader,

@@ -145,12 +145,12 @@ THREE.PMREMGenerator.prototype = {
 			},
 
 			uniforms: {
-				"faceIndex": { value: 0 },
-				"roughness": { value: 0.5 },
-				"mapSize": { value: 0.5 },
-				"envMap": { value: null },
-				"queryScale": { value: new THREE.Vector3( 1, 1, 1 ) },
-				"testColor": { value: new THREE.Vector3( 1, 1, 1 ) },
+				"faceIndex": new THREE.Uniform( 0 ),
+				"roughness": new THREE.Uniform( 0.5 ),
+				"mapSize": new THREE.Uniform( 0.5 ),
+				"envMap": new THREE.Uniform( null ),
+				"queryScale": new THREE.Uniform( new THREE.Vector3( 1, 1, 1 ) ),
+				"testColor": new THREE.Uniform( new THREE.Vector3( 1, 1, 1 ) ),
 			},
 
 			vertexShader:

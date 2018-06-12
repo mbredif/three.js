@@ -264,7 +264,7 @@
 
 				var newMaterial = new THREE.ShaderMaterial( {
 					uniforms: {
-						color: { value: new THREE.Color( 0.45 * 0xffffff ) }
+						color: new THREE.Uniform( new THREE.Color( 0.45 * 0xffffff ) )
 					},
 					vertexShader: document.getElementById( 'vs' ).textContent,
 					fragmentShader: document.getElementById( 'fs' ).textContent,

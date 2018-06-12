@@ -276,9 +276,9 @@ THREE.UnrealBloomPass.prototype = Object.assign( Object.create( THREE.Pass.proto
 			},
 
 			uniforms: {
-				"colorTexture": { value: null },
-				"texSize": { value: new THREE.Vector2( 0.5, 0.5 ) },
-				"direction": { value: new THREE.Vector2( 0.5, 0.5 ) }
+				"colorTexture": new THREE.Uniform( null ),
+				"texSize": new THREE.Uniform( new THREE.Vector2( 0.5, 0.5 ) ),
+				"direction": new THREE.Uniform( new THREE.Vector2( 0.5, 0.5 ) )
 			},
 
 			vertexShader:
@@ -327,16 +327,16 @@ THREE.UnrealBloomPass.prototype = Object.assign( Object.create( THREE.Pass.proto
 			},
 
 			uniforms: {
-				"blurTexture1": { value: null },
-				"blurTexture2": { value: null },
-				"blurTexture3": { value: null },
-				"blurTexture4": { value: null },
-				"blurTexture5": { value: null },
-				"dirtTexture": { value: null },
-				"bloomStrength": { value: 1.0 },
-				"bloomFactors": { value: null },
-				"bloomTintColors": { value: null },
-				"bloomRadius": { value: 0.0 }
+				"blurTexture1": new THREE.Uniform( null ),
+				"blurTexture2": new THREE.Uniform( null ),
+				"blurTexture3": new THREE.Uniform( null ),
+				"blurTexture4": new THREE.Uniform( null ),
+				"blurTexture5": new THREE.Uniform( null ),
+				"dirtTexture": new THREE.Uniform( null ),
+				"bloomStrength": new THREE.Uniform( 1.0 ),
+				"bloomFactors": new THREE.Uniform( null ),
+				"bloomTintColors": new THREE.Uniform( null ),
+				"bloomRadius": new THREE.Uniform( 0.0 )
 			},
 
 			vertexShader:

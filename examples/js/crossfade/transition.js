@@ -15,24 +15,12 @@ function Transition ( sceneA, sceneB ) {
 
 		uniforms: {
 
-			tDiffuse1: {
-				value: null
-			},
-			tDiffuse2: {
-				value: null
-			},
-			mixRatio: {
-				value: 0.0
-			},
-			threshold: {
-				value: 0.1
-			},
-			useTexture: {
-				value: 1
-			},
-			tMixTexture: {
-				value: this.textures[ 0 ]
-			}
+			tDiffuse1: new THREE.Uniform( null ),
+			tDiffuse2: new THREE.Uniform( null ),
+			mixRatio: new THREE.Uniform( 0.0 ),
+			threshold: new THREE.Uniform( 0.1 ),
+			useTexture: new THREE.Uniform( 1 ),
+			tMixTexture: new THREE.Uniform( this.textures[ 0 ] )
 		},
 		vertexShader: [
 

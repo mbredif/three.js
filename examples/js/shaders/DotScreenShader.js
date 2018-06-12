@@ -10,11 +10,11 @@ THREE.DotScreenShader = {
 
 	uniforms: {
 
-		"tDiffuse": { value: null },
-		"tSize":    { value: new THREE.Vector2( 256, 256 ) },
-		"center":   { value: new THREE.Vector2( 0.5, 0.5 ) },
-		"angle":    { value: 1.57 },
-		"scale":    { value: 1.0 }
+		"tDiffuse": new THREE.Uniform( null ),
+		"tSize":    new THREE.Uniform( new THREE.Vector2( 256, 256 ) ),
+		"center":   new THREE.Uniform( new THREE.Vector2( 0.5, 0.5 ) ),
+		"angle":    new THREE.Uniform( 1.57 ),
+		"scale":    new THREE.Uniform( 1.0 )
 
 	},
 

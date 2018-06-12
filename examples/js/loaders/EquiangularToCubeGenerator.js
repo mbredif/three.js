@@ -65,7 +65,7 @@ THREE.EquiangularToCubeGenerator.prototype = {
 		var shaderMaterial = new THREE.ShaderMaterial( {
 
 			uniforms: {
-				"equirectangularMap": { value: this.sourceTexture },
+				"equirectangularMap": new THREE.Uniform( this.sourceTexture ),
 			},
 
 			vertexShader:

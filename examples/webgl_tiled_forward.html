@@ -91,16 +91,15 @@
 
 		var lights = [], objects = [];
 
+        var lightTexture = new THREE.DataTexture( new Float32Array( 32 * 2 * 4 ), 32, 2, THREE.RGBAFormat, THREE.FloatType );
 		var State = {
 			rows: 0,
 			cols: 0,
 			width: 0,
 			height: 0,
-			tileData: { value: null },
-			tileTexture: { value: null },
-			lightTexture: {
-				value: new THREE.DataTexture( new Float32Array( 32 * 2 * 4 ), 32, 2, THREE.RGBAFormat, THREE.FloatType )
-			},
+			tileData: new THREE.Uniform( null ),
+			tileTexture: new THREE.Uniform( null ),
+			lightTexture: new THREE.Uniform( lightTexture ),
 		};
 
 		function resizeTiles() {

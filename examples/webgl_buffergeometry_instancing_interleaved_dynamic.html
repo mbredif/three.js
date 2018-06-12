@@ -224,9 +224,7 @@
 
 		var material = new THREE.RawShaderMaterial( {
 
-			uniforms: {
-				map: { value: texture }
-			},
+			uniforms: { map: new THREE.Uniform( texture ) },
 			vertexShader: document.getElementById( 'vertexShader' ).textContent,
 			fragmentShader: document.getElementById( 'fragmentShader' ).textContent,
 			side: THREE.DoubleSide,

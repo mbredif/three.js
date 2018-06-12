@@ -8,8 +8,8 @@ THREE.ColorifyShader = {
 
 	uniforms: {
 
-		"tDiffuse": { value: null },
-		"color":    { value: new THREE.Color( 0xffffff ) }
+		"tDiffuse": new THREE.Uniform( null ),
+		"color":    new THREE.Uniform( new THREE.Color( 0xffffff ) )
 
 	},
 

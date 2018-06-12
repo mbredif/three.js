@@ -46,11 +46,11 @@ THREE.AnaglyphEffect = function ( renderer, width, height ) {
 
 		uniforms: {
 
-			"mapLeft": { value: _renderTargetL.texture },
-			"mapRight": { value: _renderTargetR.texture },
+			"mapLeft": new THREE.Uniform( _renderTargetL.texture ),
+			"mapRight": new THREE.Uniform( _renderTargetR.texture ),
 
-			"colorMatrixLeft": { value: this.colorMatrixLeft },
-			"colorMatrixRight": { value: this.colorMatrixRight }
+			"colorMatrixLeft": new THREE.Uniform( this.colorMatrixLeft ),
+			"colorMatrixRight": new THREE.Uniform( this.colorMatrixRight )
 
 		},
 

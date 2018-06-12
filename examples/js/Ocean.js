@@ -97,9 +97,9 @@ THREE.Ocean = function ( renderer, camera, scene, options ) {
 		vertexShader: fullscreeenVertexShader.vertexShader,
 		fragmentShader: "#define HORIZONTAL \n" + oceanHorizontalShader.fragmentShader
 	} );
-	this.materialOceanHorizontal.uniforms.u_transformSize = { value: this.resolution };
-	this.materialOceanHorizontal.uniforms.u_subtransformSize = { value: null };
-	this.materialOceanHorizontal.uniforms.u_input = { value: null };
+	this.materialOceanHorizontal.uniforms.u_transformSize = new THREE.Uniform( this.resolution );
+	this.materialOceanHorizontal.uniforms.u_subtransformSize = new THREE.Uniform( null );
+	this.materialOceanHorizontal.uniforms.u_input = new THREE.Uniform( null );
 	this.materialOceanHorizontal.depthTest = false;
 
 	// 2 - Vertical wave vertices used for FFT
@@ -110,9 +110,9 @@ THREE.Ocean = function ( renderer, camera, scene, options ) {
 		vertexShader: fullscreeenVertexShader.vertexShader,
 		fragmentShader: oceanVerticalShader.fragmentShader
 	} );
-	this.materialOceanVertical.uniforms.u_transformSize = { value: this.resolution };
-	this.materialOceanVertical.uniforms.u_subtransformSize = { value: null };
-	this.materialOceanVertical.uniforms.u_input = { value: null };
+	this.materialOceanVertical.uniforms.u_transformSize = new THREE.Uniform( this.resolution );
+	this.materialOceanVertical.uniforms.u_subtransformSize = new THREE.Uniform( null );
+	this.materialOceanVertical.uniforms.u_input = new THREE.Uniform( null );
 	this.materialOceanVertical.depthTest = false;
 
 	// 3 - Initial spectrum used to generate height map
@@ -123,8 +123,8 @@ THREE.Ocean = function ( renderer, camera, scene, options ) {
 		vertexShader: fullscreeenVertexShader.vertexShader,
 		fragmentShader: initialSpectrumShader.fragmentShader
 	} );
-	this.materialInitialSpectrum.uniforms.u_wind = { value: new THREE.Vector2() };
-	this.materialInitialSpectrum.uniforms.u_resolution = { value: this.resolution };
+	this.materialInitialSpectrum.uniforms.u_wind = new THREE.Uniform( new THREE.Vector2() );
+	this.materialInitialSpectrum.uniforms.u_resolution = new THREE.Uniform( this.resolution );
 	this.materialInitialSpectrum.depthTest = false;
 
 	// 4 - Phases used to animate heightmap
@@ -135,7 +135,7 @@ THREE.Ocean = function ( renderer, camera, scene, options ) {
 		vertexShader: fullscreeenVertexShader.vertexShader,
 		fragmentShader: phaseShader.fragmentShader
 	} );
-	this.materialPhase.uniforms.u_resolution = { value: this.resolution };
+	this.materialPhase.uniforms.u_resolution = new THREE.Uniform( this.resolution );
 	this.materialPhase.depthTest = false;
 
 	// 5 - Shader used to update spectrum
@@ -146,8 +146,8 @@ THREE.Ocean = function ( renderer, camera, scene, options ) {
 		vertexShader: fullscreeenVertexShader.vertexShader,
 		fragmentShader: spectrumShader.fragmentShader
 	} );
-	this.materialSpectrum.uniforms.u_initialSpectrum = { value: null };
-	this.materialSpectrum.uniforms.u_resolution = { value: this.resolution };
+	this.materialSpectrum.uniforms.u_initialSpectrum = new THREE.Uniform( null );
+	this.materialSpectrum.uniforms.u_resolution = new THREE.Uniform( this.resolution );
 	this.materialSpectrum.depthTest = false;
 
 	// 6 - Shader used to update spectrum normals
@@ -158,8 +158,8 @@ THREE.Ocean = function ( renderer, camera, scene, options ) {
 		vertexShader: fullscreeenVertexShader.vertexShader,
 		fragmentShader: normalShader.fragmentShader
 	} );
-	this.materialNormal.uniforms.u_displacementMap = { value: null };
-	this.materialNormal.uniforms.u_resolution = { value: this.resolution };
+	this.materialNormal.uniforms.u_displacementMap = new THREE.Uniform( null );
+	this.materialNormal.uniforms.u_resolution = new THREE.Uniform( this.resolution );
 	this.materialNormal.depthTest = false;
 
 	// 7 - Shader used to update normals
@@ -171,13 +171,13 @@ THREE.Ocean = function ( renderer, camera, scene, options ) {
 		fragmentShader: oceanShader.fragmentShader
 	} );
 	// this.materialOcean.wireframe = true;
-	this.materialOcean.uniforms.u_geometrySize = { value: this.resolution };
-	this.materialOcean.uniforms.u_displacementMap = { value: this.displacementMapFramebuffer.texture };
-	this.materialOcean.uniforms.u_normalMap = { value: this.normalMapFramebuffer.texture };
-	this.materialOcean.uniforms.u_oceanColor = { value: this.oceanColor };
-	this.materialOcean.uniforms.u_skyColor = { value: this.skyColor };
-	this.materialOcean.uniforms.u_sunDirection = { value: new THREE.Vector3( this.sunDirectionX, this.sunDirectionY, this.sunDirectionZ ) };
-	this.materialOcean.uniforms.u_exposure = { value: this.exposure };
+	this.materialOcean.uniforms.u_geometrySize = new THREE.Uniform( this.resolution );
+	this.materialOcean.uniforms.u_displacementMap = new THREE.Uniform( this.displacementMapFramebuffer.texture );
+	this.materialOcean.uniforms.u_normalMap = new THREE.Uniform( this.normalMapFramebuffer.texture );
+	this.materialOcean.uniforms.u_oceanColor = new THREE.Uniform( this.oceanColor );
+	this.materialOcean.uniforms.u_skyColor = new THREE.Uniform( this.skyColor );
+	this.materialOcean.uniforms.u_sunDirection = new THREE.Uniform( new THREE.Vector3( this.sunDirectionX, this.sunDirectionY, this.sunDirectionZ ) );
+	this.materialOcean.uniforms.u_exposure = new THREE.Uniform( this.exposure );
 
 	// Disable blending to prevent default premultiplied alpha values
 	this.materialOceanHorizontal.blending = 0;

@@ -341,7 +341,7 @@
 					uniforms: THREE.UniformsUtils.merge( [
 						THREE.ShaderLib[ 'phong' ].uniforms,
 						{
-							heightmap: { value: null }
+							heightmap: new THREE.Uniform( null )
 						}
 					] ),
 					vertexShader: document.getElementById( 'waterVertexShader' ).textContent,
@@ -396,9 +396,9 @@
 
 				gpuCompute.setVariableDependencies( heightmapVariable, [ heightmapVariable ] );
 
-				heightmapVariable.material.uniforms.mousePos = { value: new THREE.Vector2( 10000, 10000 ) };
-				heightmapVariable.material.uniforms.mouseSize = { value: 20.0 };
-				heightmapVariable.material.uniforms.viscosityConstant = { value: 0.03 };
+				heightmapVariable.material.uniforms.mousePos = new THREE.Uniform( new THREE.Vector2( 10000, 10000 ) );
+				heightmapVariable.material.uniforms.mouseSize = new THREE.Uniform( 20.0 );
+				heightmapVariable.material.uniforms.viscosityConstant = new THREE.Uniform( 0.03 );
 				heightmapVariable.material.defines.BOUNDS = BOUNDS.toFixed( 1 );
 
 				var error = gpuCompute.init();
@@ -407,7 +407,7 @@
 				}
 
 				// Create compute shader to smooth the water surface and velocity
-				smoothShader = gpuCompute.createShaderMaterial( document.getElementById( 'smoothFragmentShader' ).textContent, { texture: { value: null } } );
+				smoothShader = gpuCompute.createShaderMaterial( document.getElementById( 'smoothFragmentShader' ).textContent, { texture: new THREE.Uniform( null ) } );
 
 			}
 

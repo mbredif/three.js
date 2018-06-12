@@ -9,23 +9,23 @@ THREE.SAOShader = {
 	},
 	uniforms: {
 
-		'tDepth': { type: 't', value: null },
-		'tDiffuse': { type: 't', value: null },
-		'tNormal': { type: 't', value: null },
-		'size': { type: 'v2', value: new THREE.Vector2( 512, 512 ) },
+		'tDepth': new THREE.Uniform( null ),
+		'tDiffuse': new THREE.Uniform( null ),
+		'tNormal': new THREE.Uniform( null ),
+		'size': new THREE.Uniform( new THREE.Vector2( 512, 512 ) ),
 
-		'cameraNear': { type: 'f', value: 1 },
-		'cameraFar': { type: 'f', value: 100 },
-		'cameraProjectionMatrix': { type: 'm4', value: new THREE.Matrix4() },
-		'cameraInverseProjectionMatrix': { type: 'm4', value: new THREE.Matrix4() },
+		'cameraNear': new THREE.Uniform( 1 ),
+		'cameraFar': new THREE.Uniform( 100 ),
+		'cameraProjectionMatrix': new THREE.Uniform( new THREE.Matrix4() ),
+		'cameraInverseProjectionMatrix': new THREE.Uniform( new THREE.Matrix4() ),
 
-		'scale': { type: 'f', value: 1.0 },
-		'intensity': { type: 'f', value: 0.1 },
-		'bias': { type: 'f', value: 0.5 },
+		'scale': new THREE.Uniform( 1.0 ),
+		'intensity': new THREE.Uniform( 0.1 ),
+		'bias': new THREE.Uniform( 0.5 ),
 
-		'minResolution': { type: 'f', value: 0.0 },
-		'kernelRadius': { type: 'f', value: 100.0 },
-		'randomSeed': { type: 'f', value: 0.0 }
+		'minResolution': new THREE.Uniform( 0.0 ),
+		'kernelRadius': new THREE.Uniform( 100.0 ),
+		'randomSeed': new THREE.Uniform( 0.0 )
 	},
 	vertexShader: [
 		"varying vec2 vUv;",

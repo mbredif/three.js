@@ -5,14 +5,14 @@ THREE.DepthLimitedBlurShader = {
 		'PERSPECTIVE_CAMERA': 1
 	},
 	uniforms: {
-		'tDiffuse': { type: 't', value: null },
-		'size': { type: 'v2', value: new THREE.Vector2( 512, 512 ) },
-		'sampleUvOffsets': { type: 'v2v', value: [ new THREE.Vector2( 0, 0 ) ] },
-		'sampleWeights': { type: '1fv', value: [ 1.0 ] },
-		'tDepth': { type: 't', value: null },
-		'cameraNear': { type: 'f', value: 10 },
-		'cameraFar': { type: 'f', value: 1000 },
-		'depthCutoff': { type: 'f', value: 10 },
+		'tDiffuse': new THREE.Uniform( null ),
+		'size': new THREE.Uniform( new THREE.Vector2( 512, 512 ) ),
+		'sampleUvOffsets': new THREE.Uniform( [ new THREE.Vector2( 0, 0 ) ] ),
+		'sampleWeights': new THREE.Uniform( [ 1.0 ] ),
+		'tDepth': new THREE.Uniform( null ),
+		'cameraNear': new THREE.Uniform( 10 ),
+		'cameraFar': new THREE.Uniform( 1000 ),
+		'depthCutoff': new THREE.Uniform( 10 ),
 	},
 	vertexShader: [
 		"#include <common>",

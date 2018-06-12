@@ -629,10 +629,10 @@ THREE.GLTFLoader = ( function () {
 				delete uniforms.roughnessMap;
 				delete uniforms.metalnessMap;
 
-				uniforms.specular = { value: new THREE.Color().setHex( 0x111111 ) };
-				uniforms.glossiness = { value: 0.5 };
-				uniforms.specularMap = { value: null };
-				uniforms.glossinessMap = { value: null };
+				uniforms.specular = new THREE.Uniform( new THREE.Color().setHex( 0x111111 ) );
+				uniforms.glossiness = new THREE.Uniform( 0.5 );
+				uniforms.specularMap = new THREE.Uniform( null );
+				uniforms.glossinessMap = new THREE.Uniform( null );
 
 				params.vertexShader = shader.vertexShader;
 				params.fragmentShader = fragmentShader;

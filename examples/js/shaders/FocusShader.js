@@ -10,11 +10,11 @@ THREE.FocusShader = {
 
 	uniforms : {
 
-		"tDiffuse":       { value: null },
-		"screenWidth":    { value: 1024 },
-		"screenHeight":   { value: 1024 },
-		"sampleDistance": { value: 0.94 },
-		"waveFactor":     { value: 0.00125 }
+		"tDiffuse":       new THREE.Uniform( null ),
+		"screenWidth":    new THREE.Uniform( 1024 ),
+		"screenHeight":   new THREE.Uniform( 1024 ),
+		"sampleDistance": new THREE.Uniform( 0.94 ),
+		"waveFactor":     new THREE.Uniform( 0.00125 )
 
 	},
 

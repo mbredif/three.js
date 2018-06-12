@@ -375,9 +375,9 @@ THREE.OutlinePass.prototype = Object.assign( Object.create( THREE.Pass.prototype
 		return new THREE.ShaderMaterial( {
 
 			uniforms: {
-				"depthTexture": { value: null },
-				"cameraNearFar": { value: new THREE.Vector2( 0.5, 0.5 ) },
-				"textureMatrix": { value: new THREE.Matrix4() }
+				"depthTexture": new THREE.Uniform( null ),
+				"cameraNearFar": new THREE.Uniform( new THREE.Vector2( 0.5, 0.5 ) ),
+				"textureMatrix": new THREE.Uniform( new THREE.Matrix4() )
 			},
 
 			vertexShader: [
@@ -421,10 +421,10 @@ THREE.OutlinePass.prototype = Object.assign( Object.create( THREE.Pass.prototype
 		return new THREE.ShaderMaterial( {
 
 			uniforms: {
-				"maskTexture": { value: null },
-				"texSize": { value: new THREE.Vector2( 0.5, 0.5 ) },
-				"visibleEdgeColor": { value: new THREE.Vector3( 1.0, 1.0, 1.0 ) },
-				"hiddenEdgeColor": { value: new THREE.Vector3( 1.0, 1.0, 1.0 ) },
+				"maskTexture": new THREE.Uniform( null ),
+				"texSize": new THREE.Uniform( new THREE.Vector2( 0.5, 0.5 ) ),
+				"visibleEdgeColor": new THREE.Uniform( new THREE.Vector3( 1.0, 1.0, 1.0 ) ),
+				"hiddenEdgeColor": new THREE.Uniform( new THREE.Vector3( 1.0, 1.0, 1.0 ) ),
 			},
 
 			vertexShader:
@@ -470,10 +470,10 @@ THREE.OutlinePass.prototype = Object.assign( Object.create( THREE.Pass.prototype
 			},
 
 			uniforms: {
-				"colorTexture": { value: null },
-				"texSize": { value: new THREE.Vector2( 0.5, 0.5 ) },
-				"direction": { value: new THREE.Vector2( 0.5, 0.5 ) },
-				"kernelRadius": { value: 1.0 }
+				"colorTexture": new THREE.Uniform( null ),
+				"texSize": new THREE.Uniform( new THREE.Vector2( 0.5, 0.5 ) ),
+				"direction": new THREE.Uniform( new THREE.Vector2( 0.5, 0.5 ) ),
+				"kernelRadius": new THREE.Uniform( 1.0 )
 			},
 
 			vertexShader:
@@ -519,13 +519,13 @@ THREE.OutlinePass.prototype = Object.assign( Object.create( THREE.Pass.prototype
 		return new THREE.ShaderMaterial( {
 
 			uniforms: {
-				"maskTexture": { value: null },
-				"edgeTexture1": { value: null },
-				"edgeTexture2": { value: null },
-				"patternTexture": { value: null },
-				"edgeStrength": { value: 1.0 },
-				"edgeGlow": { value: 1.0 },
-				"usePatternTexture": { value: 0.0 }
+				"maskTexture": new THREE.Uniform( null ),
+				"edgeTexture1": new THREE.Uniform( null ),
+				"edgeTexture2": new THREE.Uniform( null ),
+				"patternTexture": new THREE.Uniform( null ),
+				"edgeStrength": new THREE.Uniform( 1.0 ),
+				"edgeGlow": new THREE.Uniform( 1.0 ),
+				"usePatternTexture": new THREE.Uniform( 0.0 )
 			},
 
 			vertexShader:

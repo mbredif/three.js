@@ -37,8 +37,8 @@ THREE.Lensflare = function () {
 
 	var material1a = new THREE.RawShaderMaterial( {
 		uniforms: {
-			'scale': { value: null },
-			'screenPosition': { value: null }
+			'scale': new THREE.Uniform( null ),
+			'screenPosition': new THREE.Uniform( null )
 		},
 		vertexShader: [
 
@@ -74,9 +74,9 @@ THREE.Lensflare = function () {
 
 	var material1b = new THREE.RawShaderMaterial( {
 		uniforms: {
-			'map': { value: tempMap },
-			'scale': { value: null },
-			'screenPosition': { value: null }
+			'map': new THREE.Uniform( tempMap ),
+			'scale': new THREE.Uniform( null ),
+			'screenPosition': new THREE.Uniform( null )
 		},
 		vertexShader: [
 
@@ -131,11 +131,11 @@ THREE.Lensflare = function () {
 
 	var material2 = new THREE.RawShaderMaterial( {
 		uniforms: {
-			'map': { value: null },
-			'occlusionMap': { value: occlusionMap },
-			'color': { value: new THREE.Color( 0xffffff ) },
-			'scale': { value: new THREE.Vector2() },
-			'screenPosition': { value: new THREE.Vector3() }
+			'map': new THREE.Uniform( null ),
+			'occlusionMap': new THREE.Uniform( occlusionMap ),
+			'color': new THREE.Uniform( new THREE.Color( 0xffffff ) ),
+			'scale': new THREE.Uniform( new THREE.Vector2() ),
+			'screenPosition': new THREE.Uniform( new THREE.Vector3() )
 		},
 		vertexShader: shader.vertexShader,
 		fragmentShader: shader.fragmentShader,
@@ -282,11 +282,11 @@ THREE.LensflareElement.Shader = {
 
 	uniforms: {
 
-		'map': { value: null },
-		'occlusionMap': { value: null },
-		'color': { value: null },
-		'scale': { value: null },
-		'screenPosition': { value: null }
+		'map': new THREE.Uniform( null ),
+		'occlusionMap': new THREE.Uniform( null ),
+		'color': new THREE.Uniform( null ),
+		'scale': new THREE.Uniform( null ),
+		'screenPosition': new THREE.Uniform( null )
 
 	},
 
