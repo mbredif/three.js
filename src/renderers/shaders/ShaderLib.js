@@ -3,6 +3,7 @@ import { UniformsUtils } from './UniformsUtils.js';
 import { Vector3 } from '../../math/Vector3.js';
 import { UniformsLib } from './UniformsLib.js';
 import { Color } from '../../math/Color.js';
+import { Uniform } from '../../core/Uniform.js';
 
 /**
  * @author alteredq / http://alteredqualia.com/
@@ -40,7 +41,7 @@ var ShaderLib = {
 			UniformsLib.fog,
 			UniformsLib.lights,
 			{
-				emissive: { value: new Color( 0x000000 ) }
+				emissive: new Uniform( new Color( 0x000000 ) )
 			}
 		] ),
 
@@ -65,9 +66,9 @@ var ShaderLib = {
 			UniformsLib.fog,
 			UniformsLib.lights,
 			{
-				emissive: { value: new Color( 0x000000 ) },
-				specular: { value: new Color( 0x111111 ) },
-				shininess: { value: 30 }
+				emissive: new Uniform( new Color( 0x000000 ) ),
+				specular: new Uniform( new Color( 0x111111 ) ),
+				shininess: new Uniform( 30 )
 			}
 		] ),
 
@@ -92,10 +93,10 @@ var ShaderLib = {
 			UniformsLib.fog,
 			UniformsLib.lights,
 			{
-				emissive: { value: new Color( 0x000000 ) },
-				roughness: { value: 0.5 },
-				metalness: { value: 0.5 },
-				envMapIntensity: { value: 1 } // temporary
+				emissive: new Uniform( new Color( 0x000000 ) ),
+				roughness: new Uniform( 0.5 ),
+				metalness: new Uniform( 0.5 ),
+				envMapIntensity: new Uniform( 1 ) // temporary
 			}
 		] ),
 
@@ -122,9 +123,9 @@ var ShaderLib = {
 			UniformsLib.common,
 			UniformsLib.fog,
 			{
-				scale: { value: 1 },
-				dashSize: { value: 1 },
-				totalSize: { value: 2 }
+				scale: new Uniform( 1 ),
+				dashSize: new Uniform( 1 ),
+				totalSize: new Uniform( 2 )
 			}
 		] ),
 
@@ -153,7 +154,7 @@ var ShaderLib = {
 			UniformsLib.normalmap,
 			UniformsLib.displacementmap,
 			{
-				opacity: { value: 1.0 }
+				opacity: new Uniform( 1.0 )
 			}
 		] ),
 
@@ -169,9 +170,9 @@ var ShaderLib = {
 	cube: {
 
 		uniforms: {
-			tCube: { value: null },
-			tFlip: { value: - 1 },
-			opacity: { value: 1.0 }
+			tCube: new Uniform( null ),
+			tFlip: new Uniform( - 1 ),
+			opacity: new Uniform( 1.0 )
 		},
 
 		vertexShader: ShaderChunk.cube_vert,
@@ -182,7 +183,7 @@ var ShaderLib = {
 	equirect: {
 
 		uniforms: {
-			tEquirect: { value: null },
+			tEquirect: new Uniform( null ),
 		},
 
 		vertexShader: ShaderChunk.equirect_vert,
@@ -196,9 +197,9 @@ var ShaderLib = {
 			UniformsLib.common,
 			UniformsLib.displacementmap,
 			{
-				referencePosition: { value: new Vector3() },
-				nearDistance: { value: 1 },
-				farDistance: { value: 1000 }
+				referencePosition: new Uniform( new Vector3() ),
+				nearDistance: new Uniform( 1 ),
+				farDistance: new Uniform( 1000 )
 			}
 		] ),
 
@@ -213,8 +214,8 @@ var ShaderLib = {
 			UniformsLib.lights,
 			UniformsLib.fog,
 			{
-				color: { value: new Color( 0x00000 ) },
-				opacity: { value: 1.0 }
+				color: new Uniform( new Color( 0x00000 ) ),
+				opacity: new Uniform( 1.0 )
 			},
 		] ),
 
@@ -230,8 +231,8 @@ ShaderLib.physical = {
 	uniforms: UniformsUtils.merge( [
 		ShaderLib.standard.uniforms,
 		{
-			clearCoat: { value: 0 },
-			clearCoatRoughness: { value: 0 }
+			clearCoat: new Uniform( 0 ),
+			clearCoatRoughness: new Uniform( 0 )
 		}
 	] ),
 

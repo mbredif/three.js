@@ -6,7 +6,7 @@ import { UniformsUtils } from '../renderers/shaders/UniformsUtils.js';
  *
  * parameters = {
  *  defines: { "label" : "value" },
- *  uniforms: { "parameter1": { value: 1.0 }, "parameter2": { value2: 2 } },
+ *  uniforms: { "parameter1": new THREE.Uniform( 1.0 ), "parameter2": new THREE.Uniform( 2 ) },
  *
  *  fragmentShader: <string>,
  *  vertexShader: <string>,

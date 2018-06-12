@@ -4,20 +4,22 @@
 
 import { Matrix3 } from '../../math/Matrix3.js';
 import { Plane } from '../../math/Plane.js';
+import { Uniform } from '../../core/Uniform.js';
 
 function WebGLClipping() {
 
 	var scope = this,
 
-		globalState = null,
-		numGlobalPlanes = 0,
-		localClippingEnabled = false,
-		renderingShadows = false,
+	globalState = null,
+	numGlobalPlanes = 0,
+	localClippingEnabled = false,
+	renderingShadows = false,
 
-		plane = new Plane(),
-		viewNormalMatrix = new Matrix3(),
+	plane = new Plane(),
+	viewNormalMatrix = new Matrix3(),
 
-		uniform = { value: null, needsUpdate: false };
+	uniform = new Uniform( null );
+	uniform.needsUpdate = false;
 
 	this.uniform = uniform;
 	this.numPlanes = 0;

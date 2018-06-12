@@ -1,63 +1,57 @@
+import { Uniform } from '../../core/Uniform.js';
 /**
  * Uniform Utilities
  */
 
 var UniformsUtils = {
 
-	merge: function ( uniforms ) {
+	merge: function ( sources, target ) {
 
-		var merged = {};
+		target = target || {};
 
-		for ( var u = 0; u < uniforms.length; u ++ ) {
 
-			var tmp = this.clone( uniforms[ u ] );
+		for ( var u = 0; u < sources.length; u ++ ) {
 
-			for ( var p in tmp ) {
-
-				merged[ p ] = tmp[ p ];
-
-			}
+			this.clone( sources[ u ], target );
 
 		}
 
-		return merged;
+		return target;
 
 	},
 
-	clone: function ( uniforms_src ) {
+	clone: function ( source, target ) {
 
-		var uniforms_dst = {};
+		target = target || {};
 
-		for ( var u in uniforms_src ) {
+		for ( var u in source ) {
 
-			uniforms_dst[ u ] = {};
+            if ( source[ u ].clone === undefined ) {
+                console.warn( u, ' should now be created using new THREE.Uniform( value )');
+                source[ u ] = new Uniform( source[ u ].value, source[ u ].properties );
+            }
 
-			for ( var p in uniforms_src[ u ] ) {
-
-				var parameter_src = uniforms_src[ u ][ p ];
-
-				if ( parameter_src && ( parameter_src.isColor ||
-					parameter_src.isMatrix3 || parameter_src.isMatrix4 ||
-					parameter_src.isVector2 || parameter_src.isVector3 || parameter_src.isVector4 ||
-					parameter_src.isTexture ) ) {
-
-					uniforms_dst[ u ][ p ] = parameter_src.clone();
-
-				} else if ( Array.isArray( parameter_src ) ) {
-
-					uniforms_dst[ u ][ p ] = parameter_src.slice();
-
-				} else {
-
-					uniforms_dst[ u ][ p ] = parameter_src;
-
-				}
-
-			}
+			target[ u ] = source[ u ].clone();
 
 		}
 
-		return uniforms_dst;
+		return target;
+
+	},
+
+	copy: function ( source, target ) {
+
+		for ( var u in source ) {
+
+			if ( target[ u ] ) {
+
+                target[ u ].copy( source[ u ] );
+
+            }
+
+		}
+
+		return target;
 
 	}
 
