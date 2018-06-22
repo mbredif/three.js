@@ -533,9 +533,9 @@ Object.assign( Quaternion.prototype, {
 
 		}
 
-		var sinHalfTheta = Math.sqrt( 1.0 - cosHalfTheta * cosHalfTheta );
+		var sqrSinHalfTheta = 1.0 - cosHalfTheta * cosHalfTheta;
 
-		if ( sinHalfTheta * sinHalfTheta <= Number.EPSILON ) {
+		if ( sqrSinHalfTheta <= Number.EPSILON ) {
 
 			var s = 1 - t;
 			this._w = s * w + t * this._w;
@@ -547,6 +547,7 @@ Object.assign( Quaternion.prototype, {
 
 		}
 
+		var sinHalfTheta = Math.sqrt( sqrSinHalfTheta );
 		var halfTheta = Math.atan2( sinHalfTheta, cosHalfTheta );
 		var ratioA = Math.sin( ( 1 - t ) * halfTheta ) / sinHalfTheta,
 			ratioB = Math.sin( t * halfTheta ) / sinHalfTheta;
