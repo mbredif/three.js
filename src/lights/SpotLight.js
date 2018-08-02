@@ -6,7 +6,7 @@ import { Object3D } from '../core/Object3D.js';
  * @author alteredq / http://alteredqualia.com/
  */
 
-function SpotLight( color, intensity, distance, angle, penumbra, decay, camera ) {
+function SpotLight( color, intensity, distance, angle, penumbra, decay, camera, colorMap ) {
 
 	Light.call( this, color, intensity );
 
@@ -42,6 +42,7 @@ function SpotLight( color, intensity, distance, angle, penumbra, decay, camera )
 
 	this.shadow = new SpotLightShadow( camera );
 	this.shadowAutoUpdate = true;
+	this.colorMap = colorMap || null;
 
 }
 
