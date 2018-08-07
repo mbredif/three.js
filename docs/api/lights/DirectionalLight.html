@@ -99,30 +99,26 @@
 
 		<h3>[property:Object3D target]</h3>
 		<p>
-			The DirectionalLight points from its [page:.position position] to target.position. The default
-			position of the target is *(0, 0, 0)*.<br />
+			The DirectionalLight points from its [page:.position position] to target.position.
+			If target is undefined, it points to to the origin *(0, 0, 0)* of its parent frame.<br />
 
-			*Note*: For the target's position to be changed to anything other than the default,
-			it must be added to the [page:Scene scene] using
-		</p>
-		<code>
-		scene.add( light.target );
-		</code>
-		<p>
-			This is so that the target's [page:Object3D.matrixWorld matrixWorld] gets automatically
-			updated each frame.<br /><br />
+			The position pointed to by the DirectionalLight may be changed using lookAt
+			<code>
+light.lookAt( x, y, z ); // or
+light.lookAt( lookAtPosition );
+			</code>
+			*Note*: the LookAt position must be expressed in the parent frame of the light, which is typically
+			the world frame if the light has been added to the scene with no rotation/translation.
 
-			It is also possible to set the target to be another object in the scene (anything with a
-			[page:Object3D.position position] property), like so:
-		</p>
-		<code>
-		var targetObject = new THREE.Object3D();
-		scene.add(targetObject);
+			Alternatively, it may be set to track a target object.
+			<code>
+var targetObject = new THREE.Object3D();
+scene.add(targetObject);
 
-		light.target = targetObject;
-		</code>
-		<p>
-			The directionalLight will now track the target object.
+light.target = targetObject;
+			</code>
+			*Note*: The target object mush be added to the [page:Scene scene] to get its
+			[page:Object3D.matrixWorld matrixWorld] automatically updated each frame.
 		</p>
 
 
