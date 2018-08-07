@@ -61,6 +61,16 @@ scene.add( helper );
 			</code>
 		</p>
 
+		<h3>[name]( [param:OrthographicCamera camera] )</h3>
+		<p>
+		[page:OrthographicCamera camera] - (optional) the light's view of the world.<br /><br />
+
+		Create a new [name]. If not provided, the constructor creates an [page:OrthographicCamera]
+		to manage the shadow's view of the world. This is not intended to be called directly - it is called
+		internally by [page:DirectionalLight].
+		</p>
+
+
 		<h2>Constructor</h2>
 		<h3>[name]( )</h3>
 		<p>
@@ -73,7 +83,7 @@ scene.add( helper );
 			See the base [page:LightShadow LightShadow] class for common properties.
 		</p>
 
-		<h3>[property:Camera camera]</h3>
+		<h3>[property:OrthographicCamera camera]</h3>
 		<p>
 			The light's view of the world. This is used to generate a depth map of the scene; objects behind
 			other objects from the light's perspective will be in shadow.<br /><br />

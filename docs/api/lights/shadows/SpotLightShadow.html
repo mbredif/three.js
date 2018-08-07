@@ -59,13 +59,20 @@ scene.add( helper );
 
 		<h2>Constructor</h2>
 
-		The constructor creates a [param:PerspectiveCamera PerspectiveCamera] to manage the shadow's view of the world.
+		<h3>[name]( [param:PerspectiveCamera camera] )</h3>
+		<p>
+		[page:PerspectiveCamera camera] - (optional) the light's view of the world.<br /><br />
+
+		Create a new [name]. If not provided, the constructor creates a [page:PerspectiveCamera]
+		to manage the shadow's view of the world.
+		</p>
+
 
 		<h2>Properties</h2>
 		See the base [page:LightShadow LightShadow] class for common properties.
 
 
-	 <h3>[property:Camera camera]</h3>
+	 <h3>[property:PerspectiveCamera camera]</h3>
 	 <p>
 		 The light's view of the world. This is used to generate a depth map of the scene; objects behind
 		 other objects from the light's perspective will be in shadow.<br /><br />

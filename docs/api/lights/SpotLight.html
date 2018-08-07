@@ -67,7 +67,7 @@
 		<h2>Constructor</h2>
 
 
-		<h3>[name]( [param:Integer color], [param:Float intensity], [param:Float distance], [param:Radians angle], [param:Float penumbra], [param:Float decay] )</h3>
+		<h3>[name]( [param:Integer color], [param:Float intensity], [param:Float distance], [param:Radians angle], [param:Float penumbra], [param:Float decay], [param:PerspectiveCamera camera] )</h3>
 		<p>
 			[page:Integer color] - (optional) hexadecimal color of the light. Default is 0xffffff (white).<br />
 			[page:Float intensity] - (optional) numeric value of the light's strength/intensity. Default is 1.<br /><br />
@@ -78,6 +78,7 @@
 			[page:Float penumbra] - Percent of the spotlight cone that is attenuated due to penumbra.
 			Takes values between zero and 1. Default is zero.<br />
 			[page:Float decay] - The amount the light dims along the distance of the light.<br /><br />
+			[page:PerspectiveCamera camera] - (optional) the light's view of the world.<br /><br />
 
 			Creates a new [name].
 		</p>
@@ -152,27 +153,26 @@
 
 		<h3>[property:Object3D target]</h3>
 		<p>
-			The Spotlight points from its [page:.position position] to target.position. The default
-			position of the target is *(0, 0, 0)*.<br />
+			The Spotlight points from its [page:.position position] to target.position.
+			If target is undefined, it points to to the origin *(0, 0, 0)* of its parent frame.<br />
 
-			*Note*: For the target's position to be changed to anything other than the default,
-			it must be added to the [page:Scene scene] using
+			The position pointed to by the Spotlight may be changed using lookAt
 			<code>
-				scene.add( light.target );
+light.lookAt( x, y, z ); // or
+light.lookAt( vector3 );
 			</code>
+			*Note*: the LookAt position must be expressed in the parent frame of the light, which is typically
+			the world frame if the light has been added to the scene with no rotation/translation.
 
-			This is so that the target's [page:Object3D.matrixWorld matrixWorld] gets automatically
-			updated each frame.<br /><br />
-
-			It is also possible to set the target to be another object in the scene (anything with a
-			[page:Object3D.position position] property), like so:
+			Alternatively, it may be set to track a target object.
 			<code>
 var targetObject = new THREE.Object3D();
 scene.add(targetObject);
 
 light.target = targetObject;
 			</code>
-			The spotlight will now track the target object.
+			*Note*: The target object mush be added to the [page:Scene scene] to get its
+			[page:Object3D.matrixWorld matrixWorld] automatically updated each frame.
 		</p>
 
 		<h3>[property:Boolean shadowAutoUpdate]</h3>
