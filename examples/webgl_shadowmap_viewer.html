@@ -75,6 +75,7 @@
 				spotLight.angle = Math.PI / 5;
 				spotLight.penumbra = 0.3;
 				spotLight.position.set( 10, 10, 5 );
+				spotLight.lookAt( 0, 0, 0 );
 				spotLight.castShadow = true;
 				spotLight.shadow.camera.near = 8;
 				spotLight.shadow.camera.far = 30;
@@ -87,6 +88,7 @@
 				dirLight = new THREE.DirectionalLight( 0xffffff, 1 );
 				dirLight.name = 'Dir. Light';
 				dirLight.position.set( 0, 10, 0 );
+				dirLight.lookAt( 0, 0, 0 );
 				dirLight.castShadow = true;
 				dirLight.shadow.camera.near = 1;
 				dirLight.shadow.camera.far = 10;

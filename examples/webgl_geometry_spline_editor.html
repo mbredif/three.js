@@ -94,6 +94,7 @@
 				scene.add( new THREE.AmbientLight( 0xf0f0f0 ) );
 				var light = new THREE.SpotLight( 0xffffff, 1.5 );
 				light.position.set( 0, 1500, 200 );
+				light.lookAt( 0, 0, 0 );
 				light.castShadow = true;
 				light.shadow.camera.fov = 70;
 				light.shadow.camera.aspect = 1;

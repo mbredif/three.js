@@ -890,14 +890,11 @@ THREE.WebGLDeferredRenderer = function ( parameters ) {
 		uniforms.lightAngle.value = originalLight.angle;
 		uniforms.lightColor.value.copy( originalLight.color );
 		uniforms.lightIntensity.value = originalLight.intensity;
-		uniforms.lightPositionVS.value.setFromMatrixPosition( originalLight.matrixWorld ).applyMatrix4( _currentCamera.matrixWorldInverse );
+		uniforms.lightPositionVS.value.setFromMatrixPosition( originalLight.matrixWorld )
+		uniforms.lightPositionVS.value.applyMatrix4( _currentCamera.matrixWorldInverse );
 
-		var vec = uniforms.lightDirectionVS.value;
-		var vec2 = _tmpVector3;
-
-		vec.setFromMatrixPosition( originalLight.matrixWorld );
-		vec2.setFromMatrixPosition( originalLight.target.matrixWorld );
-		vec.sub( vec2 ).normalize().transformDirection( _currentCamera.matrixWorldInverse );
+		originalLight.getWorldDirection( uniforms.lightDirectionVS.value ).negate();
+		uniforms.lightDirectionVS.value.transformDirection(  _currentCamera.matrixWorldInverse );
 
 		updateDeferredLightCommonUniforms( uniforms );
 
@@ -933,12 +930,8 @@ THREE.WebGLDeferredRenderer = function ( parameters ) {
 		uniforms.lightColor.value.copy( originalLight.color );
 		uniforms.lightIntensity.value = originalLight.intensity;
 
-		var vec = uniforms.lightDirectionVS.value;
-		var vec2 = _tmpVector3;
-
-		vec.setFromMatrixPosition( originalLight.matrixWorld );
-		vec2.setFromMatrixPosition( originalLight.target.matrixWorld );
-		vec.sub( vec2 ).normalize().transformDirection( _currentCamera.matrixWorldInverse );
+		originalLight.getWorldDirection( uniforms.lightDirectionVS.value ).negate();
+		uniforms.lightDirectionVS.value.transformDirection(  _currentCamera.matrixWorldInverse );
 
 		updateDeferredLightCommonUniforms( uniforms );
 
