@@ -35,7 +35,7 @@ function WebGLShadowMap( _renderer, _objects, maxTextureSize ) {
 
 	var shadowSide = { 0: BackSide, 1: FrontSide, 2: DoubleSide };
 
-	var cameraConvention = new Vector3( - 1, 1, -1 );
+	var cameraConvention = new Vector3( - 1, 1, - 1 );
 
 	var cubeDirections = [
 		new Vector3( 1, 0, 0 ), new Vector3( - 1, 0, 0 ), new Vector3( 0, 0, 1 ),
