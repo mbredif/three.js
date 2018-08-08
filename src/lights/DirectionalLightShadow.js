@@ -5,9 +5,10 @@ import { OrthographicCamera } from '../cameras/OrthographicCamera.js';
  * @author mrdoob / http://mrdoob.com/
  */
 
-function DirectionalLightShadow( ) {
+function DirectionalLightShadow( camera ) {
 
-	LightShadow.call( this, new OrthographicCamera( - 5, 5, 5, - 5, 0.5, 500 ) );
+	camera = camera || new OrthographicCamera( - 5, 5, 5, - 5, 0.5, 500 );
+	LightShadow.call( this, camera );
 
 }
 

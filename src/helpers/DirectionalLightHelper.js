@@ -4,7 +4,6 @@
  * @author WestLangley / http://github.com/WestLangley
  */
 
-import { Vector3 } from '../math/Vector3.js';
 import { Object3D } from '../core/Object3D.js';
 import { Line } from '../objects/Line.js';
 import { Float32BufferAttribute } from '../core/BufferAttribute.js';
@@ -63,36 +62,19 @@ DirectionalLightHelper.prototype.dispose = function () {
 
 DirectionalLightHelper.prototype.update = function () {
 
-	var v1 = new Vector3();
-	var v2 = new Vector3();
-	var v3 = new Vector3();
+	if ( this.color !== undefined ) {
 
-	return function update() {
+		this.lightPlane.material.color.set( this.color );
+		this.targetLine.material.color.set( this.color );
 
-		v1.setFromMatrixPosition( this.light.matrixWorld );
-		v2.setFromMatrixPosition( this.light.target.matrixWorld );
-		v3.subVectors( v2, v1 );
+	} else {
 
-		this.lightPlane.lookAt( v3 );
+		this.lightPlane.material.color.copy( this.light.color );
+		this.targetLine.material.color.copy( this.light.color );
 
-		if ( this.color !== undefined ) {
+	}
 
-			this.lightPlane.material.color.set( this.color );
-			this.targetLine.material.color.set( this.color );
-
-		} else {
-
-			this.lightPlane.material.color.copy( this.light.color );
-			this.targetLine.material.color.copy( this.light.color );
-
-		}
-
-		this.targetLine.lookAt( v3 );
-		this.targetLine.scale.z = v3.length();
-
-	};
-
-}();
+};
 
 
 export { DirectionalLightHelper };

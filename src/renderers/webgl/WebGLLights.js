@@ -135,7 +135,6 @@ function WebGLLights() {
 
 	};
 
-	var vector3 = new Vector3();
 	var matrix4 = new Matrix4();
 	var matrix42 = new Matrix4();
 
@@ -172,9 +171,7 @@ function WebGLLights() {
 				var uniforms = cache.get( light );
 
 				uniforms.color.copy( light.color ).multiplyScalar( light.intensity );
-				uniforms.direction.setFromMatrixPosition( light.matrixWorld );
-				vector3.setFromMatrixPosition( light.target.matrixWorld );
-				uniforms.direction.sub( vector3 );
+				light.getWorldDirection( uniforms.direction ).negate();
 				uniforms.direction.transformDirection( viewMatrix );
 
 				uniforms.shadow = light.castShadow;
@@ -205,9 +202,7 @@ function WebGLLights() {
 				uniforms.color.copy( color ).multiplyScalar( intensity );
 				uniforms.distance = distance;
 
-				uniforms.direction.setFromMatrixPosition( light.matrixWorld );
-				vector3.setFromMatrixPosition( light.target.matrixWorld );
-				uniforms.direction.sub( vector3 );
+				light.getWorldDirection( uniforms.direction ).negate();
 				uniforms.direction.transformDirection( viewMatrix );
 
 				uniforms.coneCos = Math.cos( light.angle );

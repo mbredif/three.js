@@ -4,7 +4,6 @@
  * @author WestLangley / http://github.com/WestLangley
  */
 
-import { Vector3 } from '../math/Vector3.js';
 import { Object3D } from '../core/Object3D.js';
 import { LineSegments } from '../objects/LineSegments.js';
 import { LineBasicMaterial } from '../materials/LineBasicMaterial.js';
@@ -68,41 +67,29 @@ SpotLightHelper.prototype.dispose = function () {
 
 SpotLightHelper.prototype.update = function () {
 
-	var vector = new Vector3();
-	var vector2 = new Vector3();
+	this.light.updateMatrixWorld();
+	if ( this.light.shadowAutoUpdate ) {
 
-	return function update() {
+		this.light.shadow.update( this.light );
 
-		this.light.updateMatrixWorld();
-		if ( this.light.shadowAutoUpdate ) {
+	}
 
-			this.light.shadow.update( this.light );
+	var coneLength = this.light.distance ? this.light.distance : 1000;
+	var coneWidth = coneLength * Math.tan( this.light.angle );
 
-		}
+	this.cone.scale.set( coneWidth, coneWidth, coneLength );
 
-		var coneLength = this.light.distance ? this.light.distance : 1000;
-		var coneWidth = coneLength * Math.tan( this.light.angle );
+	if ( this.color !== undefined ) {
 
-		this.cone.scale.set( coneWidth, coneWidth, coneLength );
+		this.cone.material.color.set( this.color );
 
-		vector.setFromMatrixPosition( this.light.matrixWorld );
-		vector2.setFromMatrixPosition( this.light.target.matrixWorld );
+	} else {
 
-		this.cone.lookAt( vector2.sub( vector ) );
+		this.cone.material.color.copy( this.light.color );
 
-		if ( this.color !== undefined ) {
+	}
 
-			this.cone.material.color.set( this.color );
-
-		} else {
-
-			this.cone.material.color.copy( this.light.color );
-
-		}
-
-	};
-
-}();
+};
 
 
 export { SpotLightHelper };

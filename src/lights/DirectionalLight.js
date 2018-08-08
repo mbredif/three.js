@@ -7,18 +7,18 @@ import { Object3D } from '../core/Object3D.js';
  * @author alteredq / http://alteredqualia.com/
  */
 
-function DirectionalLight( color, intensity ) {
+function DirectionalLight( color, intensity, camera ) {
 
 	Light.call( this, color, intensity );
 
 	this.type = 'DirectionalLight';
 
 	this.position.copy( Object3D.DefaultUp );
-	this.updateMatrix();
+	this.lookAt( 0, 0, 0 );
 
-	this.target = new Object3D();
+	this.target = undefined;
 
-	this.shadow = new DirectionalLightShadow();
+	this.shadow = new DirectionalLightShadow( camera );
 
 }
 
@@ -32,7 +32,7 @@ DirectionalLight.prototype = Object.assign( Object.create( Light.prototype ), {
 
 		Light.prototype.copy.call( this, source );
 
-		this.target = source.target.clone();
+		this.target = source.target ? source.target.clone() : undefined;
 
 		this.shadow = source.shadow.clone();
 

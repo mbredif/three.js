@@ -6,9 +6,10 @@ import { PerspectiveCamera } from '../cameras/PerspectiveCamera.js';
  * @author mrdoob / http://mrdoob.com/
  */
 
-function SpotLightShadow() {
+function SpotLightShadow( camera ) {
 
-	LightShadow.call( this, new PerspectiveCamera( 50, 1, 0.5, 500 ) );
+	camera = camera || new PerspectiveCamera( 50, 1, 0.5, 500 );
+	LightShadow.call( this, camera );
 
 }
 
