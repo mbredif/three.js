@@ -15,6 +15,7 @@ function DirectionalLight( color, intensity, camera ) {
 
 	this.position.copy( Object3D.DefaultUp );
 	this.lookAt( 0, 0, 0 );
+	this.updateMatrix();
 
 	this.target = undefined;
 

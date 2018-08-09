@@ -14,6 +14,7 @@ function SpotLight( color, intensity, distance, angle, penumbra, decay, camera )
 
 	this.position.copy( Object3D.DefaultUp );
 	this.lookAt( 0, 0, 0 );
+	this.updateMatrix();
 
 	this.target = undefined;
 
