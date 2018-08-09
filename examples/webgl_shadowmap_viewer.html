@@ -25,7 +25,8 @@
 	</head>
 	<body>
 		<div id="info">
-		<a href="http://threejs.org" target="_blank" rel="noopener">three.js</a> - ShadowMapViewer example by <a href="https://github.com/arya-s">arya-s</a>
+		<a href="http://threejs.org" target="_blank" rel="noopener">three.js</a> - ShadowMapViewer example by <a href="https://github.com/arya-s">arya-s</a><br />
+		t: toggle HUD, h: toggle helpers
 		</div>
 
 		<script src="../build/three.js"></script>
@@ -43,6 +44,9 @@
 			var dirLight, spotLight, spotLight2;
 			var torusKnot, cube;
 			var dirLightShadowMapViewer, spotLightShadowMapViewer;
+			var dirLightHelper, spotLightHelper, spotLight2Helper;
+			var showHUD = true;
+			var showHelpers = true;
 
 			init();
 			animate();
@@ -73,18 +77,20 @@
 
 				spotLight = new THREE.SpotLight( 0xffffff );
 				spotLight.name = 'Spot Light';
-				spotLight.intensity = 0.3;
+				spotLight.intensity = 3.;
 				spotLight.angle = Math.PI / 5;
 				spotLight.penumbra = 0.2;
-				spotLight.position.set( 10, 10, 5 );
+				spotLight.position.set( 1.6, 1.6, 1.6 );
 				spotLight.lookAt( 0, 0, 0 );
 				spotLight.castShadow = true;
-				spotLight.shadow.camera.near = 0.5;
+				spotLight.shadow.camera.near = 0.1;
 				spotLight.shadow.camera.far = 40;
 				spotLight.shadow.mapSize.width = 1024;
 				spotLight.shadow.mapSize.height = 1024;
+				spotLight.map = textureLoader.load( 'textures/UV_Grid_Sm.jpg' );
 
-				scene.add( new THREE.CameraHelper( spotLight.shadow.camera ) );
+				spotLightHelper = new THREE.CameraHelper( spotLight.shadow.camera );
+				scene.add( spotLightHelper );
 
 				spotLight2 = new THREE.SpotLight( 0xffffff );
 				spotLight2.name = 'Textured Spot Light';
@@ -92,15 +98,16 @@
 				spotLight2.angle = Math.PI / 5;
 				spotLight2.penumbra = 0.3;
 				spotLight2.position.set( -10, 5, 0 );
+				spotLight2.lookAt( 0, 0, 0 );
 				spotLight2.castShadow = true;
 				spotLight2.shadow.camera.near = 8;
 				spotLight2.shadow.camera.far = 25;
 				spotLight2.shadow.mapSize.width = 1024;
 				spotLight2.shadow.mapSize.height = 1024;
-				spotLight2.map = textureLoader.load( 'textures/UV_Grid_Sm.jpg' );
 				scene.add( spotLight2 );
 
-				scene.add( new THREE.CameraHelper( spotLight2.shadow.camera ) );
+				spotLight2Helper = new THREE.CameraHelper( spotLight2.shadow.camera );
+				scene.add( spotLight2Helper );
 
 				dirLight = new THREE.DirectionalLight( 0xffffff, 1 );
 				dirLight.name = 'Dir. Light';
@@ -118,7 +125,8 @@
 				dirLight.shadow.mapSize.height = 1024;
 				scene.add( dirLight );
 
-				scene.add( new THREE.CameraHelper( dirLight.shadow.camera ) );
+				dirLightHelper = new THREE.CameraHelper( dirLight.shadow.camera );
+				scene.add( dirLightHelper );
 
 				// Geometry
 				var geometry = new THREE.TorusKnotBufferGeometry( 25, 8, 75, 20 );
@@ -203,6 +211,25 @@
 				stats = new Stats();
 				document.body.appendChild( stats.dom );
 
+				function onKeyDown ( event ) {
+
+					switch ( event.keyCode ) {
+
+						case 84:	/*t*/
+							showHUD = ! showHUD;
+							break;
+
+						case 72:	/*h*/
+							showHelpers = ! showHelpers;
+							break;
+
+					}
+
+				}
+
+				window.addEventListener( 'resize', onWindowResize, false );
+				window.addEventListener( 'keydown', onKeyDown, false );
+
 			}
 
 			function onWindowResize() {
@@ -243,8 +270,11 @@
 
 				var delta = clock.getDelta();
 
+				spotLightHelper.visible = showHelpers;
+				spotLight2Helper.visible = showHelpers;
+				dirLightHelper.visible = showHelpers;
 				renderScene();
-				renderShadowMapViewers();
+				if ( showHUD ) renderShadowMapViewers();
 
 				torusKnot.rotation.x += 0.25 * delta;
 				torusKnot.rotation.y += 1 * delta;
