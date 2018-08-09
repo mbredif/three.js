@@ -12,6 +12,7 @@ import { Vector3 } from '../../math/Vector3.js';
 import { Vector2 } from '../../math/Vector2.js';
 import { Matrix4 } from '../../math/Matrix4.js';
 import { Frustum } from '../../math/Frustum.js';
+import { Object3D } from '../../core/Object3D.js';
 
 function WebGLShadowMap( _renderer, _objects, maxTextureSize ) {
 
@@ -31,7 +32,9 @@ function WebGLShadowMap( _renderer, _objects, maxTextureSize ) {
 		_depthMaterials = new Array( _NumberOfMaterialVariants ),
 		_distanceMaterials = new Array( _NumberOfMaterialVariants ),
 
-		_materialCache = {};
+		_materialCache = {},
+
+		_lightWorld = new Object3D();
 
 	var shadowSide = { 0: BackSide, 1: FrontSide, 2: DoubleSide };
 
@@ -206,9 +209,23 @@ function WebGLShadowMap( _renderer, _objects, maxTextureSize ) {
 				if ( light.target ) {
 
 					_lookTarget.setFromMatrixPosition( light.target.matrixWorld );
-					light.lookAt( _lookTarget );
+					if ( light.parent ) {
+
+						_lightWorld.position.setFromMatrixPosition( light.matrixWorld );
+						_lightWorld.lookAt( _lookTarget );
+						light.quaternion.copy( light.parent.quaternion ).inverse();
+						light.quaternion.multiply( _lightWorld.quaternion );
+						light.matrixWorldNeedsUpdate = true;
+
+					} else {
+
+						light.lookAt( _lookTarget );
+
+					}
 
 				}
+
+				light.updateMatrixWorld();
 
 				if ( shadowCamera.matrixAutoUpdate ) {
 
