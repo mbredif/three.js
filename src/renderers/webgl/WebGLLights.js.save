@@ -40,7 +40,8 @@ function UniformsCache() {
 						distance: 0,
 						coneCos: 0,
 						penumbraCos: 0,
-						decay: 0
+						decay: 0,
+						map: null
 					};
 					break;
 
@@ -300,22 +301,7 @@ function WebGLLights() {
 				uniforms.penumbraCos = Math.cos( light.angle * ( 1 - light.penumbra ) );
 				uniforms.decay = light.decay;
 
-				let spotId = spotLength;
-
-				if ( map ) {
-
-					state.spotMap[ spotMapLength ] = map;
-					// move next spot to the end to keep spots with maps at the beginning
-					spotId = spotMapLength;
-					state.spotShadow[spotLength] = state.spotShadow[spotMapLength];
-					state.spotShadowMap[spotLength] = state.spotShadowMap[spotMapLength];
-					state.spotShadowMatrix[spotLength] = state.spotShadowMatrix[spotMapLength];
-					state.spot[ spotLength ] = state.spot[ spotMapLength ];
-					spotMapLength ++;
-
-				}
-
-				if ( light.castShadow ) {
+				if ( light.castShadow || map ) {
 
 					const shadow = light.shadow;
 
@@ -327,13 +313,24 @@ function WebGLLights() {
 					shadowUniforms.shadowMapSize = shadow.mapSize;
 					numSpotShadows ++;
 
-					state.spotShadow[ spotId ] = shadowUniforms;
-					state.spotShadowMap[ spotId ] = shadowMap;
-					state.spotShadowMatrix[ spotId ] = light.shadow.matrix;
+					state.spotShadow[ spotLength ] = shadowUniforms;
+					state.spotShadowMap[ spotLength ] = shadowMap;
+					state.spotShadowMatrix[ spotLength ] = light.shadow.matrix;
 
 				}
 
-				state.spot[ spotId ] = uniforms;
+
+				if ( map ) {
+
+					state.spotShadow.splice( spotMapLength, 0, shadowUniforms );
+					state.spotShadowMap.splice( spotMapLength, 0, shadowMap );
+					state.spotShadowMatrix.splice( spotMapLength, 0, light.shadow.matrix );
+					state.spotMap[ spotMapLength ] = map;
+					spotMapLength ++;
+
+				}
+
+				state.spot[ spotLength ] = uniforms;
 
 				spotLength ++;
 

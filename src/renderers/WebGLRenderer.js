@@ -1437,6 +1437,7 @@ function WebGLRenderer( parameters ) {
 			uniforms.pointShadowMatrix.value = lights.state.pointShadowMatrix;
 			// TODO (abelnation): add area lights shadow info to uniforms
 
+			uniforms.spotMap.value = lights.state.spotMap;
 		}
 
 		const progUniforms = materialProperties.program.getUniforms(),

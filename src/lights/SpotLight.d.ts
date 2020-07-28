@@ -14,7 +14,8 @@ export class SpotLight extends Light {
 		distance?: number,
 		angle?: number,
 		penumbra?: number,
-		decay?: number
+		decay?: number,
+		map?: Texture | null;
 	);
 
 	/**
@@ -42,6 +43,7 @@ export class SpotLight extends Light {
 	angle: number;
 
 	decay: number;
+	map: Texture | null;
 	shadow: SpotLightShadow;
 	power: number;
 	penumbra: number;
