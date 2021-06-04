@@ -173,7 +173,7 @@ function filterEmptyLine( string ) {
 
 function replaceLightNums( string, parameters ) {
 
-	var numSpotLightCoords = parameters.numSpotLightShadows + parameters.numSpotLightMaps - parameters.numSpotLightShadowsWithMaps;
+	const numSpotLightCoords = parameters.numSpotLightShadows + parameters.numSpotLightMaps - parameters.numSpotLightShadowsWithMaps;
 
 	return string
 		.replace( /NUM_DIR_LIGHTS/g, parameters.numDirLights )
