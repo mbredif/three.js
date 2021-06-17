@@ -2097,134 +2097,28 @@ function WebGLRenderer( parameters = {} ) {
 
 		}
 
-		let skipPixels = srcBox ? srcBox.min.x : 0;
-		let skipRows = srcBox ? srcBox.min.y : 0;
-		let x = dstPosition ? dstPosition.x : 0;
-		let y = dstPosition ? dstPosition.y : 0;
+		let x = 0;
+		let y = 0;
+		let skipPixels = 0;
+		let skipRows = 0;
+		let width = image.width;
+		let height = image.height;
 
-		// ensure skipPixels, skipRows, x and y >= 0
-		if ( skipPixels < 0 || x < 0 ) {
+		if ( srcBox ) {
 
-			const delta = Math.min( skipPixels, x );
-			x -= delta;
-			skipPixels -= delta;
-
-		}
-
-		if ( skipRows < 0 || y < 0 ) {
-
-			const delta = Math.min( skipRows, y );
-			y -= delta;
-			skipRows -= delta;
+			skipPixels = srcBox.min.x;
+			skipRows = srcBox.min.y;
+			width = srcBox.max.x - srcBox.min.x + 1;
+			height = srcBox.max.y - srcBox.min.y + 1;
 
 		}
 
-		const width = Math.min( dstTexture.image.width - x, srcBox ? Math.min( image.width, srcBox.max.x + 1 ) - skipPixels : image.width );
-		const height = Math.min( dstTexture.image.height - y, srcBox ? Math.min( image.height, srcBox.max.y + 1 ) - skipRows : image.height );
-		if ( width < 1 || height < 1 ) return;
+		if ( dstPosition ) {
 
-		const glFormat = utils.convert( dstTexture.format );
-		const glType = utils.convert( dstTexture.type );
-
-		textures.setTexture2D( dstTexture, 0 );
-
-		// As another texture upload may have changed pixelStorei
-		// parameters, make sure they are correct for the srcTexture
-		_gl.pixelStorei( _gl.UNPACK_FLIP_Y_WEBGL, srcTexture.flipY );
-		_gl.pixelStorei( _gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, srcTexture.premultiplyAlpha );
-		_gl.pixelStorei( _gl.UNPACK_ALIGNMENT, srcTexture.unpackAlignment );
-
-		const unpackRowLen = _gl.getParameter( _gl.UNPACK_ROW_LENGTH );
-		const unpackSkipPixels = _gl.getParameter( _gl.UNPACK_SKIP_PIXELS );
-		const unpackSkipRows = _gl.getParameter( _gl.UNPACK_SKIP_ROWS );
-
-		_gl.pixelStorei( _gl.UNPACK_ROW_LENGTH, image.width );
-		_gl.pixelStorei( _gl.UNPACK_SKIP_PIXELS, skipPixels );
-		_gl.pixelStorei( _gl.UNPACK_SKIP_ROWS, skipRows );
-
-		if ( srcTexture.isCompressedTexture ) {
-
-				 _gl.compressedTexSubImage2D( _gl.TEXTURE_2D, dstLevel, x, y, width, height, glFormat, image.data );
-
-		} else {
-
-			_gl.texSubImage2D( _gl.TEXTURE_2D, dstLevel, x, y, width, height, glFormat, glType, image.data || image );
+			x = dstPosition.x;
+			y = dstPosition.y;
 
 		}
-
-		_gl.pixelStorei( _gl.UNPACK_ROW_LENGTH, unpackRowLen );
-		_gl.pixelStorei( _gl.UNPACK_SKIP_PIXELS, unpackSkipPixels );
-		_gl.pixelStorei( _gl.UNPACK_SKIP_ROWS, unpackSkipRows );
-
-		// Generate mipmaps only when copying level 0
-		if ( dstLevel === 0 && dstTexture.generateMipmaps ) _gl.generateMipmap( _gl.TEXTURE_2D );
-
-		state.unbindTexture();
-
-	};
-
-	this.copyTextureToTexture3D = function ( srcTexture, dstTexture, dstPosition = undefined, srcBox = undefined, dstLevel = 0, srcLevel = 0 ) {
-
-		if ( _this.isWebGL1Renderer ) {
-
-			console.warn( 'THREE.WebGLRenderer.copyTextureToTexture3D: can only be used with WebGL2.' );
-			return;
-
-		}
-
-		if ( ! srcTexture.isTexture ) {
-
-			console.warn( 'THREE.WebGLRenderer: .copyTextureToTexture3D() now expects (srcTexture, dstTexture, dstPosition, srcBox, dstLevel, srcLevel).' );
-			return this.copyTextureToTexture3D( arguments[ 2 ], arguments[ 3 ], arguments[ 1 ], arguments[ 0 ], arguments[ 4 ] );
-
-		}
-
-		const image = srcTexture.mipmaps[ srcLevel ] || ( srcLevel == 0 ? srcTexture.image : null );
-		if ( ! image ) {
-
-			console.error( 'mipmap level ', srcLevel, ' is not available in srcTexture' );
-			return;
-
-		}
-
-		let skipPixels = srcBox ? Math.max( 0, srcBox.min.x ) : 0;
-		let skipRows = srcBox ? Math.max( 0, srcBox.min.y ) : 0;
-		let skipImages = srcBox ? Math.max( 0, srcBox.min.z ) : 0;
-		let x = dstPosition ? dstPosition.x : 0;
-		let y = dstPosition ? dstPosition.y : 0;
-		let z = dstPosition ? dstPosition.z : 0;
-
-		// ensure skipPixels, skipRows, x and y >= 0
-		if ( skipPixels < 0 || x < 0 ) {
-
-			const delta = Math.min( skipPixels, x );
-			x -= delta;
-			skipPixels -= delta;
-
-		}
-
-		if ( skipRows < 0 || y < 0 ) {
-
-			const delta = Math.min( skipRows, y );
-			y -= delta;
-			skipRows -= delta;
-
-		}
-
-		if ( skipImages < 0 || z < 0 ) {
-
-			const delta = Math.min( skipImages, z );
-			z -= delta;
-			skipImages -= delta;
-
-		}
-
-		const image_depth = image.depth === undefined ? 1 : image.depth;
-		const width = Math.min( dstTexture.image.width - x, srcBox ? Math.min( image.width, srcBox.max.x + 1 ) - skipPixels : image.width );
-		const height = Math.min( dstTexture.image.height - y, srcBox ? Math.min( image.height, srcBox.max.y + 1 ) - skipRows : image.height );
-		const depth = Math.min( dstTexture.image.depth - z, srcBox ? Math.min( image_depth, srcBox.max.z + 1 ) - skipImages : image_depth );
-
-		if ( width < 1 || height < 1 || depth < 1 ) return;
 
 		const glFormat = utils.convert( dstTexture.format );
 		const glType = utils.convert( dstTexture.type );
@@ -2242,8 +2136,8 @@ function WebGLRenderer( parameters = {} ) {
 
 		} else {
 
-			console.warn( 'THREE.WebGLRenderer.copyTextureToTexture3D: only supports THREE.DataTexture3D and THREE.DataTexture2DArray.' );
-			return;
+			textures.setTexture2D( dstTexture, 0 );
+			glTarget = _gl.TEXTURE_2D;
 
 		}
 
@@ -2254,33 +2148,69 @@ function WebGLRenderer( parameters = {} ) {
 		_gl.pixelStorei( _gl.UNPACK_ALIGNMENT, srcTexture.unpackAlignment );
 
 		const unpackRowLen = _gl.getParameter( _gl.UNPACK_ROW_LENGTH );
-		const unpackImageHeight = _gl.getParameter( _gl.UNPACK_IMAGE_HEIGHT );
 		const unpackSkipPixels = _gl.getParameter( _gl.UNPACK_SKIP_PIXELS );
 		const unpackSkipRows = _gl.getParameter( _gl.UNPACK_SKIP_ROWS );
-		const unpackSkipImages = _gl.getParameter( _gl.UNPACK_SKIP_IMAGES );
-
 		_gl.pixelStorei( _gl.UNPACK_ROW_LENGTH, image.width );
-		_gl.pixelStorei( _gl.UNPACK_IMAGE_HEIGHT, image.height );
 		_gl.pixelStorei( _gl.UNPACK_SKIP_PIXELS, skipPixels );
 		_gl.pixelStorei( _gl.UNPACK_SKIP_ROWS, skipRows );
-		_gl.pixelStorei( _gl.UNPACK_SKIP_IMAGES, skipImages );
 
-		if ( srcTexture.isCompressedTexture ) {
+		if ( glTarget == _gl.TEXTURE_2D ) {
 
-			console.warn( 'THREE.WebGLRenderer.copyTextureToTexture3D: untested support for compressed srcTexture.' );
-			_gl.compressedTexSubImage3D( glTarget, dstLevel, x, y, z, width, height, depth, glFormat, image.data );
+			if ( srcTexture.isCompressedTexture ) {
+
+				_gl.compressedTexSubImage2D( glTarget, dstLevel, x, y, width, height, glFormat, image.data );
+
+			} else {
+
+				_gl.texSubImage2D( glTarget, dstLevel, x, y, width, height, glFormat, glType, image.data || image );
+
+			}
+
 
 		} else {
 
-			_gl.texSubImage3D( glTarget, dstLevel, x, y, z, width, height, depth, glFormat, glType, image.data || image );
+			if ( _this.isWebGL1Renderer === true ) {
+
+				console.warn( 'THREE.WebGLRenderer.copyTextureToTexture with a Texture3D or Texture2DArray destination texture can only be used with WebGL2.' );
+				return;
+
+			}
+
+			const z = ( dstPosition && dstPosition.isVector3 ) ? dstPosition.z : 0;
+			let skipImages = 0;
+			let depth = image.depth === undefined ? 1 : image.depth;
+
+			if ( srcBox && srcBox.isBox3D ) {
+
+				skipImages = srcBox.min.z;
+				depth = srcBox.max.z - srcBox.min.z + 1;
+
+			}
+
+			const unpackImageHeight = _gl.getParameter( _gl.UNPACK_IMAGE_HEIGHT );
+			const unpackSkipImages = _gl.getParameter( _gl.UNPACK_SKIP_IMAGES );
+			_gl.pixelStorei( _gl.UNPACK_IMAGE_HEIGHT, image.height );
+			_gl.pixelStorei( _gl.UNPACK_SKIP_IMAGES, skipImages );
+
+			if ( srcTexture.isCompressedTexture ) {
+
+				console.warn( 'THREE.WebGLRenderer.copyTextureToTexture: untested support for compressed 3D srcTexture.' );
+				_gl.compressedTexSubImage3D( glTarget, dstLevel, x, y, z, width, height, depth, glFormat, image.data );
+
+			} else {
+
+				_gl.texSubImage3D( glTarget, dstLevel, x, y, z, width, height, depth, glFormat, glType, image.data || image );
+
+			}
+
+			_gl.pixelStorei( _gl.UNPACK_IMAGE_HEIGHT, unpackImageHeight );
+			_gl.pixelStorei( _gl.UNPACK_SKIP_IMAGES, unpackSkipImages );
 
 		}
 
 		_gl.pixelStorei( _gl.UNPACK_ROW_LENGTH, unpackRowLen );
-		_gl.pixelStorei( _gl.UNPACK_IMAGE_HEIGHT, unpackImageHeight );
 		_gl.pixelStorei( _gl.UNPACK_SKIP_PIXELS, unpackSkipPixels );
 		_gl.pixelStorei( _gl.UNPACK_SKIP_ROWS, unpackSkipRows );
-		_gl.pixelStorei( _gl.UNPACK_SKIP_IMAGES, unpackSkipImages );
 
 		// Generate mipmaps only when copying level 0
 		if ( dstLevel === 0 && dstTexture.generateMipmaps ) _gl.generateMipmap( glTarget );
@@ -2288,6 +2218,14 @@ function WebGLRenderer( parameters = {} ) {
 		state.unbindTexture();
 
 	};
+
+	this.copyTextureToTexture3D = function ( srcBox, dstPosition, srcTexture, dstTexture, dstLevel = 0	) {
+
+		console.warn( 'THREE.WebGLRenderer: .copyTextureToTexture3D is now .copyTextureToTexture(srcTexture, dstTexture, dstPosition, srcBox, dstLevel, srcLevel).' );
+		return this.copyTextureToTexture( srcTexture, dstTexture, dstPosition, srcBox, dstLevel );
+
+	};
+
 
 	this.initTexture = function ( texture ) {
 

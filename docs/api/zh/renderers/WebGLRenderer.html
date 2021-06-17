@@ -282,12 +282,15 @@
 		<h3>[method:null copyFramebufferToTexture]( [param:Vector2 position], [param:Texture texture], [param:Number level] )</h3>
 		<p>将当前WebGLFramebuffer中的像素复制到2D纹理中。可访问[link:https://developer.mozilla.org/en-US/docs/Web/API/WebGLRenderingContext/copyTexImage2D WebGLRenderingContext.copyTexImage2D].</p>
 
-    <h3>[method:null copyTextureToTexture]( [param:Texture srcTexture], [param:Texture dstTexture], [param:Vector2 dstPosition], [param:Box2 srcBox], [param:Number dstLevel], [param:Number srcLevel] )</h3>
-		<p>Copies the pixels of a source texture in the bounds '[page:Box2 srcBox]' in the destination texture starting from the given position. Enables access to [link:https://developer.mozilla.org/en-US/docs/Web/API/WebGLRenderingContext/texSubImage2D WebGLRenderingContext.texSubImage2D].</p>
-
-		<h3>[method:null copyTextureToTexture3D]( [param:Texture srcTexture], [param:Texture dstTexture], [param:Vector3 dstPosition], [param:Box3 srcBox], [param:Number dstLevel], [param:Number srcLevel] )</h3>
-		<p>Copies the pixels of a source texture in the bounds '[page:Box3 srcBox]' in the destination texture starting from the given position. Enables access to [link:https://developer.mozilla.org/en-US/docs/Web/API/WebGL2RenderingContext/texSubImage3D WebGL2RenderingContext.texSubImage3D].</p>
-
+    <h3>[method:null copyTextureToTexture]( [param:Texture srcTexture], [param:Texture dstTexture], [param:Vector2|Vector3 dstPosition], [param:Box2|Box3 srcBox], [param:Number dstLevel], [param:Number srcLevel] )</h3>
+		<p>Copies pixels from the source texture to the destination texture at the destination position (default: origin).
+		Partial copies are possible by providing a subrange of the source texture pixel range in srcBox.
+		Source and destination mipmap levels default to 0.</p>
+		<p>Enables access to WebGLRenderingContext methods :
+		[link:https://developer.mozilla.org/en-US/docs/Web/API/WebGLRenderingContext/texSubImage2D texSubImage2D],
+		[link:https://developer.mozilla.org/en-US/docs/Web/API/WebGLRenderingContext/texSubImage3D texSubImage3D],
+		[link:https://developer.mozilla.org/en-US/docs/Web/API/WebGLRenderingContext/compressedTexSubImage2D compressedTexSubImage2D] and
+		[link:https://developer.mozilla.org/en-US/docs/Web/API/WebGLRenderingContext/compressedTexSubImage3D compressedTexSubImage3D].</p>
 		<h3>[method:null dispose]( )</h3>
 		<p>处理当前的渲染环境</p>
 
