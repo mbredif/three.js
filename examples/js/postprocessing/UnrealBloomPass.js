@@ -188,7 +188,7 @@
 			for ( let i = 0; i < this.nMips; i ++ ) {
 
 				this.fsQuad.material = this.separableBlurMaterials[ i ];
-				this.separableBlurMaterials[ i ].uniforms[ 'colorTexture' ].value = inputRenderTarget.texture;
+				this.separableBlurMaterials[ i ].uniforms[ 'colorTexture' ].value = inputRenderTarget.textures[0];
 				this.separableBlurMaterials[ i ].uniforms[ 'direction' ].value = UnrealBloomPass.BlurDirectionX;
 				renderer.setRenderTarget( this.renderTargetsHorizontal[ i ] );
 				renderer.clear();

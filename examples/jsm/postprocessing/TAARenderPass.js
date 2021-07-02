@@ -42,14 +42,14 @@ class TAARenderPass extends SSAARenderPass {
 		if ( ! this.sampleRenderTarget ) {
 
 			this.sampleRenderTarget = new WebGLRenderTarget( readBuffer.width, readBuffer.height, this.params );
-			this.sampleRenderTarget.texture.name = 'TAARenderPass.sample';
+			this.sampleRenderTarget.textures[0].name = 'TAARenderPass.sample';
 
 		}
 
 		if ( ! this.holdRenderTarget ) {
 
 			this.holdRenderTarget = new WebGLRenderTarget( readBuffer.width, readBuffer.height, this.params );
-			this.holdRenderTarget.texture.name = 'TAARenderPass.hold';
+			this.holdRenderTarget.textures[0].name = 'TAARenderPass.hold';
 
 		}
 
@@ -109,7 +109,7 @@ class TAARenderPass extends SSAARenderPass {
 		if ( accumulationWeight > 0 ) {
 
 			this.copyUniforms[ 'opacity' ].value = 1.0;
-			this.copyUniforms[ 'tDiffuse' ].value = this.sampleRenderTarget.texture;
+			this.copyUniforms[ 'tDiffuse' ].value = this.sampleRenderTarget.textures[0];
 			renderer.setRenderTarget( writeBuffer );
 			renderer.clear();
 			this.fsQuad.render( renderer );
@@ -119,7 +119,7 @@ class TAARenderPass extends SSAARenderPass {
 		if ( accumulationWeight < 1.0 ) {
 
 			this.copyUniforms[ 'opacity' ].value = 1.0 - accumulationWeight;
-			this.copyUniforms[ 'tDiffuse' ].value = this.holdRenderTarget.texture;
+			this.copyUniforms[ 'tDiffuse' ].value = this.holdRenderTarget.textures[0];
 			renderer.setRenderTarget( writeBuffer );
 			if ( accumulationWeight === 0 ) renderer.clear();
 			this.fsQuad.render( renderer );

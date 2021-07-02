@@ -79,12 +79,12 @@
  * myFilter1.uniforms.theTexture.value = inputTexture;
  *
  * const myRenderTarget = gpuCompute.createRenderTarget();
- * myFilter2.uniforms.theTexture.value = myRenderTarget.texture;
+ * myFilter2.uniforms.theTexture.value = myRenderTarget.textures[0];
  *
  * const outputRenderTarget = gpuCompute.createRenderTarget();
  *
  * // Now use the output texture where you want:
- * myMaterial.uniforms.map.value = outputRenderTarget.texture;
+ * myMaterial.uniforms.map.value = outputRenderTarget.textures[0];
  *
  * // And compute each frame, before rendering to screen:
  * gpuCompute.doRenderTarget( myFilter1, myRenderTarget );

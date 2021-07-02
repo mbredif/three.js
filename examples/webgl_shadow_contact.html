@@ -102,7 +102,7 @@
 
 				// the render target that will show the shadows in the plane texture
 				renderTarget = new THREE.WebGLRenderTarget( 512, 512 );
-				renderTarget.texture.generateMipmaps = false;
+				renderTarget.textures[0].generateMipmaps = false;
 
 				// the render target that we will use to blur the first render target
 				renderTargetBlur = new THREE.WebGLRenderTarget( 512, 512 );
@@ -112,7 +112,7 @@
 				// make a plane and make it face up
 				const planeGeometry = new THREE.PlaneGeometry( PLANE_WIDTH, PLANE_HEIGHT ).rotateX( Math.PI / 2 );
 				const planeMaterial = new THREE.MeshBasicMaterial( {
-					map: renderTarget.texture,
+					map: renderTarget.textures[0],
 					opacity: state.shadow.opacity,
 					transparent: true,
 					depthWrite: false,
@@ -247,7 +247,7 @@
 
 				// blur horizontally and draw in the renderTargetBlur
 				blurPlane.material = horizontalBlurMaterial;
-				blurPlane.material.uniforms.tDiffuse.value = renderTarget.texture;
+				blurPlane.material.uniforms.tDiffuse.value = renderTarget.textures[0];
 				horizontalBlurMaterial.uniforms.h.value = amount * 1 / 256;
 
 				renderer.setRenderTarget( renderTargetBlur );

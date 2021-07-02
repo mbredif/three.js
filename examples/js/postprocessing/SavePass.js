@@ -23,7 +23,7 @@
 					magFilter: THREE.LinearFilter,
 					format: THREE.RGBFormat
 				} );
-				this.renderTarget.texture.name = 'SavePass.rt';
+				this.renderTarget.textures[0].name = 'SavePass.rt';
 
 			}
 
