@@ -134,10 +134,10 @@
 
 				// Create a multi render target with Float buffers
 
-				renderTarget = new THREE.WebGLMultipleRenderTargets(
+				renderTarget = new THREE.WebGLRenderTarget(
 					window.innerWidth * window.devicePixelRatio,
 					window.innerHeight * window.devicePixelRatio,
-					2
+					{ count : 2 }
 				);
 
 				for ( let i = 0, il = renderTarget.textures.length; i < il; i ++ ) {
