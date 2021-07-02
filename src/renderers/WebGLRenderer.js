@@ -1826,25 +1826,13 @@ function WebGLRenderer( parameters = {} ) {
 		}
 
 		let framebuffer = null;
-		let isCube = false;
-		let isRenderTarget3D = false;
-
 		if ( renderTarget ) {
-
-			const texture = renderTarget.textures[0];
-
-			if ( texture.isDataTexture3D || texture.isDataTexture2DArray ) {
-
-				isRenderTarget3D = true;
-
-			}
 
 			const __webglFramebuffer = properties.get( renderTarget ).__webglFramebuffer;
 
 			if ( renderTarget.isWebGLCubeRenderTarget ) {
 
 				framebuffer = __webglFramebuffer[ activeCubeFace ];
-				isCube = true;
 
 			} else if ( renderTarget.isWebGLMultisampleRenderTarget ) {
 
@@ -1876,35 +1864,23 @@ function WebGLRenderer( parameters = {} ) {
 
 			if ( renderTarget ) {
 
-				if ( renderTarget.isWebGLMultipleRenderTargets ) {
+				const textures = renderTarget.textures;
 
-					const textures = renderTarget.textures;
+				if ( _currentDrawBuffers.length !== textures.length ) {
 
-					if ( _currentDrawBuffers.length !== textures.length || _currentDrawBuffers[ 0 ] !== _gl.COLOR_ATTACHMENT0 ) {
+					_currentDrawBuffers.length = textures.length;
+					needsUpdate = true;
 
-						for ( let i = 0, il = textures.length; i < il; i ++ ) {
+				}
 
-							_currentDrawBuffers[ i ] = _gl.COLOR_ATTACHMENT0 + i;
+				for ( let i = 0, il = textures.length; i < il; i ++ ) {
 
-						}
+					if ( _currentDrawBuffers[ i ] !== _gl.COLOR_ATTACHMENT0 + i ) {
 
-						_currentDrawBuffers.length = textures.length;
-
+						_currentDrawBuffers[ i ] = _gl.COLOR_ATTACHMENT0 + i;
 						needsUpdate = true;
 
 					}
-
-				} else {
-
-					if ( _currentDrawBuffers.length !== 1 || _currentDrawBuffers[ 0 ] !== _gl.COLOR_ATTACHMENT0 ) {
-
-						_currentDrawBuffers[ 0 ] = _gl.COLOR_ATTACHMENT0;
-						_currentDrawBuffers.length = 1;
-
-						needsUpdate = true;
-
-					}
-
 				}
 
 			} else {
@@ -1940,19 +1916,31 @@ function WebGLRenderer( parameters = {} ) {
 		state.scissor( _currentScissor );
 		state.setScissorTest( _currentScissorTest );
 
-		if ( isCube ) {
+		if ( renderTarget ) {
 
-			const textureProperties = properties.get( renderTarget.textures[0] );
-			_gl.framebufferTexture2D( _gl.FRAMEBUFFER, _gl.COLOR_ATTACHMENT0, _gl.TEXTURE_CUBE_MAP_POSITIVE_X + activeCubeFace, textureProperties.__webglTexture, activeMipmapLevel );
+			const textures = renderTarget.textures;
+			for ( let i = 0, il = textures.length; i < il; i ++ ) {
 
-		} else if ( isRenderTarget3D ) {
+				const texture = renderTarget.textures[i];
+				const __webglTexture = properties.get( texture ).__webglTexture;
+				const attachement = _gl.COLOR_ATTACHMENT0 + i;
 
-			const textureProperties = properties.get( renderTarget.textures[0] );
-			const layer = activeCubeFace || 0;
-			_gl.framebufferTextureLayer( _gl.FRAMEBUFFER, _gl.COLOR_ATTACHMENT0, textureProperties.__webglTexture, activeMipmapLevel || 0, layer );
+				if ( texture.isCubeTexture ) {
 
+					const target = _gl.TEXTURE_CUBE_MAP_POSITIVE_X + activeCubeFace;
+					_gl.framebufferTexture2D( _gl.FRAMEBUFFER, attachement, target, __webglTexture, activeMipmapLevel );
+
+				} else if ( texture.isDataTexture3D || texture.isDataTexture2DArray ) {
+
+					_gl.framebufferTextureLayer( _gl.FRAMEBUFFER, attachement, __webglTexture, activeMipmapLevel, activeCubeFace );
+
+				} else {
+
+					_gl.framebufferTexture2D( _gl.FRAMEBUFFER, attachement, _gl.TEXTURE_2D, __webglTexture, activeMipmapLevel );
+
+				}
+			}
 		}
-
 	};
 
 	this.readRenderTargetPixels = function ( renderTarget, x, y, width, height, buffer, activeCubeFaceIndex ) {
