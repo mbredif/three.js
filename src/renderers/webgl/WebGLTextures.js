@@ -241,20 +241,10 @@ function WebGLTextures( _gl, extensions, state, properties, capabilities, utils,
 
 	function deallocateRenderTarget( renderTarget ) {
 
-		const texture = renderTarget.texture;
+		if ( ! renderTarget ) return;
 
 		const renderTargetProperties = properties.get( renderTarget );
 		const textureProperties = properties.get( texture );
-
-		if ( ! renderTarget ) return;
-
-		if ( textureProperties.__webglTexture !== undefined ) {
-
-			_gl.deleteTexture( textureProperties.__webglTexture );
-
-			info.memory.textures --;
-
-		}
 
 		if ( renderTarget.depthTexture ) {
 
@@ -281,27 +271,22 @@ function WebGLTextures( _gl, extensions, state, properties, capabilities, utils,
 
 		}
 
-		if ( renderTarget.isWebGLMultipleRenderTargets ) {
+		for ( let i = 0, il = renderTarget.textures.length; i < il; i ++ ) {
 
-			for ( let i = 0, il = texture.length; i < il; i ++ ) {
+			const texture = renderTarget.textures[ i ];
+			const attachmentProperties = properties.get( texture );
 
-				const attachmentProperties = properties.get( texture[ i ] );
+			if ( attachmentProperties.__webglTexture ) {
 
-				if ( attachmentProperties.__webglTexture ) {
-
-					_gl.deleteTexture( attachmentProperties.__webglTexture );
-
-					info.memory.textures --;
-
-				}
-
-				properties.remove( texture[ i ] );
+				_gl.deleteTexture( attachmentProperties.__webglTexture );
+				info.memory.textures --;
 
 			}
 
+			properties.remove( texture );
+
 		}
 
-		properties.remove( texture );
 		properties.remove( renderTarget );
 
 	}
@@ -934,7 +919,7 @@ function WebGLTextures( _gl, extensions, state, properties, capabilities, utils,
 		} else {
 
 			// Use the first texture for MRT so far
-			const texture = renderTarget.isWebGLMultipleRenderTargets === true ? renderTarget.texture[ 0 ] : renderTarget.texture;
+			const texture = renderTarget.textures[ 0 ];
 
 			const glFormat = utils.convert( texture.format );
 			const glType = utils.convert( texture.type );
@@ -1047,7 +1032,7 @@ function WebGLTextures( _gl, extensions, state, properties, capabilities, utils,
 	// Set up GL resources for the render target
 	function setupRenderTarget( renderTarget ) {
 
-		const texture = renderTarget.texture;
+		const texture = renderTarget.textures[0];
 
 		const renderTargetProperties = properties.get( renderTarget );
 		const textureProperties = properties.get( texture );
@@ -1098,7 +1083,7 @@ function WebGLTextures( _gl, extensions, state, properties, capabilities, utils,
 
 				if ( capabilities.drawBuffers ) {
 
-					const textures = renderTarget.texture;
+					const textures = renderTarget.textures;
 
 					for ( let i = 0, il = textures.length; i < il; i ++ ) {
 
@@ -1182,7 +1167,7 @@ function WebGLTextures( _gl, extensions, state, properties, capabilities, utils,
 
 		} else if ( isMultipleRenderTargets ) {
 
-			const textures = renderTarget.texture;
+      const textures = renderTarget.textures;
 
 			for ( let i = 0, il = textures.length; i < il; i ++ ) {
 
@@ -1251,8 +1236,7 @@ function WebGLTextures( _gl, extensions, state, properties, capabilities, utils,
 	function updateRenderTargetMipmap( renderTarget ) {
 
 		const supportsMips = isPowerOfTwo( renderTarget ) || isWebGL2;
-
-		const textures = renderTarget.isWebGLMultipleRenderTargets === true ? renderTarget.texture : [ renderTarget.texture ];
+		const textures = renderTarget.textures;
 
 		for ( let i = 0, il = textures.length; i < il; i ++ ) {
 

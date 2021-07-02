@@ -392,7 +392,7 @@ class PMREMGenerator {
 		}
 
 		uniforms[ 'inputEncoding' ].value = ENCODINGS[ texture.encoding ];
-		uniforms[ 'outputEncoding' ].value = ENCODINGS[ cubeUVRenderTarget.texture.encoding ];
+		uniforms[ 'outputEncoding' ].value = ENCODINGS[ cubeUVRenderTarget.textures[0].encoding ];
 
 		_setViewport( cubeUVRenderTarget, 0, 0, 3 * SIZE_MAX, 2 * SIZE_MAX );
 
@@ -627,8 +627,8 @@ function _createPlanes() {
 function _createRenderTarget( params ) {
 
 	const cubeUVRenderTarget = new WebGLRenderTarget( 3 * SIZE_MAX, 3 * SIZE_MAX, params );
-	cubeUVRenderTarget.texture.mapping = CubeUVReflectionMapping;
-	cubeUVRenderTarget.texture.name = 'PMREM.cubeUv';
+	cubeUVRenderTarget.textures[0].mapping = CubeUVReflectionMapping;
+	cubeUVRenderTarget.textures[0].name = 'PMREM.cubeUv';
 	cubeUVRenderTarget.scissorTest = true;
 	return cubeUVRenderTarget;
 

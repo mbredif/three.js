@@ -1492,7 +1492,7 @@ function WebGLRenderer( parameters = {} ) {
 
 		const fog = scene.fog;
 		const environment = material.isMeshStandardMaterial ? scene.environment : null;
-		const encoding = ( _currentRenderTarget === null ) ? _this.outputEncoding : _currentRenderTarget.texture.encoding;
+		const encoding = ( _currentRenderTarget === null ) ? _this.outputEncoding : _currentRenderTarget.textures[0].encoding;
 		const envMap = cubemaps.get( material.envMap || environment );
 		const vertexAlphas = material.vertexColors === true && object.geometry && object.geometry.attributes.color && object.geometry.attributes.color.itemSize === 4;
 
@@ -1831,7 +1831,7 @@ function WebGLRenderer( parameters = {} ) {
 
 		if ( renderTarget ) {
 
-			const texture = renderTarget.texture;
+			const texture = renderTarget.textures[0];
 
 			if ( texture.isDataTexture3D || texture.isDataTexture2DArray ) {
 
@@ -1878,7 +1878,7 @@ function WebGLRenderer( parameters = {} ) {
 
 				if ( renderTarget.isWebGLMultipleRenderTargets ) {
 
-					const textures = renderTarget.texture;
+					const textures = renderTarget.textures;
 
 					if ( _currentDrawBuffers.length !== textures.length || _currentDrawBuffers[ 0 ] !== _gl.COLOR_ATTACHMENT0 ) {
 
@@ -1942,12 +1942,12 @@ function WebGLRenderer( parameters = {} ) {
 
 		if ( isCube ) {
 
-			const textureProperties = properties.get( renderTarget.texture );
+			const textureProperties = properties.get( renderTarget.textures[0] );
 			_gl.framebufferTexture2D( _gl.FRAMEBUFFER, _gl.COLOR_ATTACHMENT0, _gl.TEXTURE_CUBE_MAP_POSITIVE_X + activeCubeFace, textureProperties.__webglTexture, activeMipmapLevel );
 
 		} else if ( isRenderTarget3D ) {
 
-			const textureProperties = properties.get( renderTarget.texture );
+			const textureProperties = properties.get( renderTarget.textures[0] );
 			const layer = activeCubeFace || 0;
 			_gl.framebufferTextureLayer( _gl.FRAMEBUFFER, _gl.COLOR_ATTACHMENT0, textureProperties.__webglTexture, activeMipmapLevel || 0, layer );
 
@@ -1978,7 +1978,7 @@ function WebGLRenderer( parameters = {} ) {
 
 			try {
 
-				const texture = renderTarget.texture;
+				const texture = renderTarget.textures[0];
 				const textureFormat = texture.format;
 				const textureType = texture.type;
 
