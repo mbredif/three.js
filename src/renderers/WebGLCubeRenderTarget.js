@@ -19,16 +19,20 @@ class WebGLCubeRenderTarget extends WebGLRenderTarget {
 
 		}
 
-		super( size, size, options );
-
 		options = options || {};
+		if ( options.texture === undefined ) {
 
-		this.texture = new CubeTexture( undefined, options.mapping, options.wrapS, options.wrapT, options.magFilter, options.minFilter, options.format, options.type, options.anisotropy, options.encoding );
+			options.texture = new CubeTexture( undefined, options.mapping, options.wrapS, options.wrapT, options.magFilter,
+				options.minFilter, options.format, options.type, options.anisotropy, options.encoding );
 
-		this.texture.generateMipmaps = options.generateMipmaps !== undefined ? options.generateMipmaps : false;
-		this.texture.minFilter = options.minFilter !== undefined ? options.minFilter : LinearFilter;
+		}
+		if ( options.texture._needsFlipEnvMap === undefined ) {
 
-		this.texture._needsFlipEnvMap = false;
+			options.texture._needsFlipEnvMap = false;
+
+		}
+
+		super( size, size, options );
 
 	}
 

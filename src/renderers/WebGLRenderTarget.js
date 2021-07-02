@@ -28,7 +28,9 @@ class WebGLRenderTarget extends EventDispatcher {
 		this.depthTexture = options.depthTexture !== undefined ? options.depthTexture : null;
 
 		const count = options.count !== undefined ? options.count : 1;
-		const texture = new Texture( undefined, options.mapping, options.wrapS, options.wrapT, options.magFilter, options.minFilter, options.format, options.type, options.anisotropy, options.encoding );
+		const texture = options.texture !== undefined ? options.texture :
+			new Texture( undefined, options.mapping, options.wrapS, options.wrapT, options.magFilter,
+				options.minFilter, options.format, options.type, options.anisotropy, options.encoding );
 
 		texture.image = { width: width, height: height, depth: 1 };
 		texture.generateMipmaps = options.generateMipmaps !== undefined ? options.generateMipmaps : false;
