@@ -1032,36 +1032,13 @@ function WebGLTextures( _gl, extensions, state, properties, capabilities, utils,
 	// Set up GL resources for the render target
 	function setupRenderTarget( renderTarget ) {
 
-		const texture = renderTarget.textures[0];
-
 		const renderTargetProperties = properties.get( renderTarget );
-		const textureProperties = properties.get( texture );
 
 		renderTarget.addEventListener( 'dispose', onRenderTargetDispose );
 
-		if ( renderTarget.isWebGLMultipleRenderTargets !== true ) {
-
-			textureProperties.__webglTexture = _gl.createTexture();
-			textureProperties.__version = texture.version;
-			info.memory.textures ++;
-
-		}
-
 		const isCube = ( renderTarget.isWebGLCubeRenderTarget === true );
-		const isMultipleRenderTargets = ( renderTarget.isWebGLMultipleRenderTargets === true );
 		const isMultisample = ( renderTarget.isWebGLMultisampleRenderTarget === true );
-		const isRenderTarget3D = texture.isDataTexture3D || texture.isDataTexture2DArray;
 		const supportsMips = isPowerOfTwo( renderTarget ) || isWebGL2;
-
-		// Handles WebGL2 RGBFormat fallback - #18858
-
-		if ( isWebGL2 && texture.format === RGBFormat && ( texture.type === FloatType || texture.type === HalfFloatType ) ) {
-
-			texture.format = RGBAFormat;
-
-			console.warn( 'THREE.WebGLRenderer: Rendering to textures with RGB format is not supported. Using RGBA format instead.' );
-
-		}
 
 		// Setup framebuffer
 
@@ -1079,33 +1056,7 @@ function WebGLTextures( _gl, extensions, state, properties, capabilities, utils,
 
 			renderTargetProperties.__webglFramebuffer = _gl.createFramebuffer();
 
-			if ( isMultipleRenderTargets ) {
-
-				if ( capabilities.drawBuffers ) {
-
-					const textures = renderTarget.textures;
-
-					for ( let i = 0, il = textures.length; i < il; i ++ ) {
-
-						const attachmentProperties = properties.get( textures[ i ] );
-
-						if ( attachmentProperties.__webglTexture === undefined ) {
-
-							attachmentProperties.__webglTexture = _gl.createTexture();
-
-							info.memory.textures ++;
-
-						}
-
-					}
-
-				} else {
-
-					console.warn( 'THREE.WebGLRenderer: WebGLMultipleRenderTargets can only be used with WebGL2 or WEBGL_draw_buffers extension.' );
-
-				}
-
-			} else if ( isMultisample ) {
+			if ( isMultisample ) {
 
 				if ( isWebGL2 ) {
 
@@ -1144,84 +1095,74 @@ function WebGLTextures( _gl, extensions, state, properties, capabilities, utils,
 
 		}
 
-		// Setup color buffer
+    const textures = renderTarget.textures;
 
-		if ( isCube ) {
+    if ( textures.length > 1 && ! capabilities.drawBuffers) {
 
-			state.bindTexture( _gl.TEXTURE_CUBE_MAP, textureProperties.__webglTexture );
-			setTextureParameters( _gl.TEXTURE_CUBE_MAP, texture, supportsMips );
+      console.warn( 'THREE.WebGLRenderer: multiple render targets can only be used with WebGL2 or WEBGL_draw_buffers extension.' );
 
-			for ( let i = 0; i < 6; i ++ ) {
+    }
 
-				setupFrameBufferTexture( renderTargetProperties.__webglFramebuffer[ i ], renderTarget, texture, _gl.COLOR_ATTACHMENT0, _gl.TEXTURE_CUBE_MAP_POSITIVE_X + i );
+    for ( let i = 0, il = textures.length; i < il; i ++ ) {
 
-			}
+      const texture = textures[ i ];
+      const textureProperties = properties.get( texture );
 
-			if ( textureNeedsGenerateMipmaps( texture, supportsMips ) ) {
+      if ( textureProperties.__webglTexture === undefined ) {
 
-				generateMipmap( _gl.TEXTURE_CUBE_MAP, texture, renderTarget.width, renderTarget.height );
+        textureProperties.__webglTexture = _gl.createTexture();
+  			textureProperties.__version = texture.version;
+        info.memory.textures ++;
 
-			}
+      }
 
-			state.bindTexture( _gl.TEXTURE_CUBE_MAP, null );
+      const target =
+        texture.isCubeTexture ? _gl.TEXTURE_CUBE_MAP :
+        texture.isDataTexture3D ? _gl.TEXTURE_3D :
+        texture.isDataTexture2DArray ? _gl.TEXTURE_2D_ARRAY :
+        _gl.TEXTURE_2D;
 
-		} else if ( isMultipleRenderTargets ) {
+      const isRenderTarget3D = texture.isDataTexture3D || texture.isDataTexture2DArray;
+      if ( isRenderTarget3D && ! isWebGL2 ) {
 
-      const textures = renderTarget.textures;
-
-			for ( let i = 0, il = textures.length; i < il; i ++ ) {
-
-				const attachment = textures[ i ];
-				const attachmentProperties = properties.get( attachment );
-
-				state.bindTexture( _gl.TEXTURE_2D, attachmentProperties.__webglTexture );
-				setTextureParameters( _gl.TEXTURE_2D, attachment, supportsMips );
-				setupFrameBufferTexture( renderTargetProperties.__webglFramebuffer, renderTarget, attachment, _gl.COLOR_ATTACHMENT0 + i, _gl.TEXTURE_2D );
-
-				if ( textureNeedsGenerateMipmaps( attachment, supportsMips ) ) {
-
-					generateMipmap( _gl.TEXTURE_2D, attachment, renderTarget.width, renderTarget.height );
-
-				}
+				console.warn( 'THREE.DataTexture3D and THREE.DataTexture2DArray only supported with WebGL2.' );
 
 			}
+      // Handles WebGL2 RGBFormat fallback - #18858
 
-			state.bindTexture( _gl.TEXTURE_2D, null );
+      if ( isWebGL2 && texture.format === RGBFormat && ( texture.type === FloatType || texture.type === HalfFloatType ) ) {
 
-		} else {
+        texture.format = RGBAFormat;
 
-			let glTextureType = _gl.TEXTURE_2D;
+        console.warn( 'THREE.WebGLRenderer: Rendering to textures with RGB format is not supported. Using RGBA format instead.' );
 
-			if ( isRenderTarget3D ) {
+      }
 
-				// Render targets containing layers, i.e: Texture 3D and 2d arrays
 
-				if ( isWebGL2 ) {
+      // Setup color buffer
+      state.bindTexture( target, textureProperties.__webglTexture );
+      setTextureParameters( target, texture, supportsMips );
+  		if ( isCube ) {
 
-					const isTexture3D = texture.isDataTexture3D;
-					glTextureType = isTexture3D ? _gl.TEXTURE_3D : _gl.TEXTURE_2D_ARRAY;
+  			for ( let f = 0; f < 6; f ++ ) {
 
-				} else {
+  				setupFrameBufferTexture( renderTargetProperties.__webglFramebuffer[ f ], renderTarget, texture, _gl.COLOR_ATTACHMENT0 + i, _gl.TEXTURE_CUBE_MAP_POSITIVE_X + f );
 
-					console.warn( 'THREE.DataTexture3D and THREE.DataTexture2DArray only supported with WebGL2.' );
+  			}
 
-				}
+  		} else {
 
-			}
+  			setupFrameBufferTexture( renderTargetProperties.__webglFramebuffer, renderTarget, texture, _gl.COLOR_ATTACHMENT0 + i, target );
 
-			state.bindTexture( glTextureType, textureProperties.__webglTexture );
-			setTextureParameters( glTextureType, texture, supportsMips );
-			setupFrameBufferTexture( renderTargetProperties.__webglFramebuffer, renderTarget, texture, _gl.COLOR_ATTACHMENT0, glTextureType );
+  		}
+      if ( textureNeedsGenerateMipmaps( texture, supportsMips ) ) {
 
-			if ( textureNeedsGenerateMipmaps( texture, supportsMips ) ) {
+        generateMipmap( target, texture, renderTarget.width, renderTarget.height, renderTarget.depth );
 
-				generateMipmap( glTextureType, texture, renderTarget.width, renderTarget.height, renderTarget.depth );
+      }
+      state.bindTexture( target, null );
 
-			}
-
-			state.bindTexture( glTextureType, null );
-
-		}
+    }
 
 		// Setup depth and stencil buffers
 
