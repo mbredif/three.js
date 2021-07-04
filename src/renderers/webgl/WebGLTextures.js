@@ -989,17 +989,13 @@ function WebGLTextures( _gl, extensions, state, properties, capabilities, utils,
 
 		const renderTargetProperties = properties.get( renderTarget );
 
-		const isCube = ( renderTarget.isWebGLCubeRenderTarget === true );
-
 		if ( renderTarget.depthTexture ) {
-
-			if ( isCube ) throw new Error( 'target.depthTexture not supported in Cube render targets' );
 
 			setupDepthTexture( renderTargetProperties.__webglFramebuffer, renderTarget );
 
 		} else {
 
-			if ( isCube ) {
+			if ( renderTarget.isWebGLCubeRenderTarget ) {
 
 				renderTargetProperties.__webglDepthbuffer = [];
 
@@ -1031,15 +1027,11 @@ function WebGLTextures( _gl, extensions, state, properties, capabilities, utils,
 		const renderTargetProperties = properties.get( renderTarget );
 
 		renderTarget.addEventListener( 'dispose', onRenderTargetDispose );
-
-		const textures = renderTarget.textures;
-		const isCube = ( renderTarget.isWebGLCubeRenderTarget === true );
-		const isMultisample = ( renderTarget.isWebGLMultisampleRenderTarget === true );
 		const supportsMips = isPowerOfTwo( renderTarget ) || isWebGL2;
 
 		// Setup framebuffer
 
-		if ( isCube ) {
+		if ( renderTarget.isWebGLCubeRenderTarget ) {
 
 			renderTargetProperties.__webglFramebuffer = [];
 
@@ -1053,7 +1045,7 @@ function WebGLTextures( _gl, extensions, state, properties, capabilities, utils,
 
 			renderTargetProperties.__webglFramebuffer = _gl.createFramebuffer();
 
-			if ( isMultisample ) {
+			if ( renderTarget.isWebGLMultisampleRenderTarget ) {
 
 				if ( isWebGL2 ) {
 
@@ -1138,7 +1130,7 @@ function WebGLTextures( _gl, extensions, state, properties, capabilities, utils,
 			// Setup color buffer
 			state.bindTexture( target, textureProperties.__webglTexture );
 			setTextureParameters( target, texture, supportsMips );
-			if ( isCube ) {
+			if ( texture.isCubeTexture ) {
 
 				for ( let f = 0; f < 6; f ++ ) {
 
