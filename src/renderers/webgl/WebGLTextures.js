@@ -243,15 +243,13 @@ function WebGLTextures( _gl, extensions, state, properties, capabilities, utils,
 
 		if ( ! renderTarget ) return;
 
-		const renderTargetProperties = properties.get( renderTarget );
-		const textureProperties = properties.get( texture );
-
 		if ( renderTarget.depthTexture ) {
 
 			renderTarget.depthTexture.dispose();
 
 		}
 
+		const renderTargetProperties = properties.get( renderTarget );
 		if ( renderTarget.isWebGLCubeRenderTarget ) {
 
 			for ( let i = 0; i < 6; i ++ ) {
@@ -274,11 +272,11 @@ function WebGLTextures( _gl, extensions, state, properties, capabilities, utils,
 		for ( let i = 0, il = renderTarget.textures.length; i < il; i ++ ) {
 
 			const texture = renderTarget.textures[ i ];
-			const attachmentProperties = properties.get( texture );
+			const textureProperties = properties.get( texture );
 
-			if ( attachmentProperties.__webglTexture ) {
+			if ( textureProperties.__webglTexture ) {
 
-				_gl.deleteTexture( attachmentProperties.__webglTexture );
+				_gl.deleteTexture( textureProperties.__webglTexture );
 				info.memory.textures --;
 
 			}
@@ -851,13 +849,11 @@ function WebGLTextures( _gl, extensions, state, properties, capabilities, utils,
 		} else {
 
 			state.texImage2D( textureTarget, 0, glInternalFormat, renderTarget.width, renderTarget.height, 0, glFormat, glType, null );
+			state.bindFramebuffer( _gl.FRAMEBUFFER, framebuffer );
+			_gl.framebufferTexture2D( _gl.FRAMEBUFFER, attachment, textureTarget, properties.get( texture ).__webglTexture, 0 );
+			state.bindFramebuffer( _gl.FRAMEBUFFER, null );
 
 		}
-
-		state.bindFramebuffer( _gl.FRAMEBUFFER, framebuffer );
-		_gl.framebufferTexture2D( _gl.FRAMEBUFFER, attachment, textureTarget, properties.get( texture ).__webglTexture, 0 );
-		state.bindFramebuffer( _gl.FRAMEBUFFER, null );
-
 	}
 
 	// Setup storage for internal depth/stencil buffers and bind to correct framebuffer
@@ -1036,6 +1032,7 @@ function WebGLTextures( _gl, extensions, state, properties, capabilities, utils,
 
 		renderTarget.addEventListener( 'dispose', onRenderTargetDispose );
 
+		const textures = renderTarget.textures;
 		const isCube = ( renderTarget.isWebGLCubeRenderTarget === true );
 		const isMultisample = ( renderTarget.isWebGLMultisampleRenderTarget === true );
 		const supportsMips = isPowerOfTwo( renderTarget ) || isWebGL2;
@@ -1065,6 +1062,7 @@ function WebGLTextures( _gl, extensions, state, properties, capabilities, utils,
 
 					_gl.bindRenderbuffer( _gl.RENDERBUFFER, renderTargetProperties.__webglColorRenderbuffer );
 
+					const texture = textures[ 0 ];
 					const glFormat = utils.convert( texture.format );
 					const glType = utils.convert( texture.type );
 					const glInternalFormat = getInternalFormat( texture.internalFormat, glFormat, glType );
@@ -1095,74 +1093,74 @@ function WebGLTextures( _gl, extensions, state, properties, capabilities, utils,
 
 		}
 
-    const textures = renderTarget.textures;
+		if ( textures.length > 1 && ! capabilities.drawBuffers ) {
 
-    if ( textures.length > 1 && ! capabilities.drawBuffers) {
+			console.warn( 'THREE.WebGLRenderer: multiple render targets can only be used with WebGL2 or WEBGL_draw_buffers extension.' );
 
-      console.warn( 'THREE.WebGLRenderer: multiple render targets can only be used with WebGL2 or WEBGL_draw_buffers extension.' );
+		}
 
-    }
+		for ( let i = 0, il = textures.length; i < il; i ++ ) {
 
-    for ( let i = 0, il = textures.length; i < il; i ++ ) {
+			const texture = textures[ i ];
+			const textureProperties = properties.get( texture );
 
-      const texture = textures[ i ];
-      const textureProperties = properties.get( texture );
+			if ( textureProperties.__webglTexture === undefined ) {
 
-      if ( textureProperties.__webglTexture === undefined ) {
+				textureProperties.__webglTexture = _gl.createTexture();
+				textureProperties.__version = texture.version;
+				info.memory.textures ++;
 
-        textureProperties.__webglTexture = _gl.createTexture();
-  			textureProperties.__version = texture.version;
-        info.memory.textures ++;
+			}
 
-      }
+			const target =
+				texture.isCubeTexture ? _gl.TEXTURE_CUBE_MAP :
+					texture.isDataTexture3D ? _gl.TEXTURE_3D :
+						texture.isDataTexture2DArray ? _gl.TEXTURE_2D_ARRAY :
+							_gl.TEXTURE_2D;
 
-      const target =
-        texture.isCubeTexture ? _gl.TEXTURE_CUBE_MAP :
-        texture.isDataTexture3D ? _gl.TEXTURE_3D :
-        texture.isDataTexture2DArray ? _gl.TEXTURE_2D_ARRAY :
-        _gl.TEXTURE_2D;
-
-      const isRenderTarget3D = texture.isDataTexture3D || texture.isDataTexture2DArray;
-      if ( isRenderTarget3D && ! isWebGL2 ) {
+			const isRenderTarget3D = texture.isDataTexture3D || texture.isDataTexture2DArray;
+			if ( isRenderTarget3D && ! isWebGL2 ) {
 
 				console.warn( 'THREE.DataTexture3D and THREE.DataTexture2DArray only supported with WebGL2.' );
 
 			}
-      // Handles WebGL2 RGBFormat fallback - #18858
+			// Handles WebGL2 RGBFormat fallback - #18858
 
-      if ( isWebGL2 && texture.format === RGBFormat && ( texture.type === FloatType || texture.type === HalfFloatType ) ) {
+			if ( isWebGL2 && texture.format === RGBFormat && ( texture.type === FloatType || texture.type === HalfFloatType ) ) {
 
-        texture.format = RGBAFormat;
+				texture.format = RGBAFormat;
 
-        console.warn( 'THREE.WebGLRenderer: Rendering to textures with RGB format is not supported. Using RGBA format instead.' );
+				console.warn( 'THREE.WebGLRenderer: Rendering to textures with RGB format is not supported. Using RGBA format instead.' );
 
-      }
+			}
 
 
-      // Setup color buffer
-      state.bindTexture( target, textureProperties.__webglTexture );
-      setTextureParameters( target, texture, supportsMips );
-  		if ( isCube ) {
+			// Setup color buffer
+			state.bindTexture( target, textureProperties.__webglTexture );
+			setTextureParameters( target, texture, supportsMips );
+			if ( isCube ) {
 
-  			for ( let f = 0; f < 6; f ++ ) {
+				for ( let f = 0; f < 6; f ++ ) {
 
-  				setupFrameBufferTexture( renderTargetProperties.__webglFramebuffer[ f ], renderTarget, texture, _gl.COLOR_ATTACHMENT0 + i, _gl.TEXTURE_CUBE_MAP_POSITIVE_X + f );
+					setupFrameBufferTexture( renderTargetProperties.__webglFramebuffer[ f ], renderTarget, texture, _gl.COLOR_ATTACHMENT0 + i, _gl.TEXTURE_CUBE_MAP_POSITIVE_X + f );
 
-  			}
+				}
 
-  		} else {
+			} else {
 
-  			setupFrameBufferTexture( renderTargetProperties.__webglFramebuffer, renderTarget, texture, _gl.COLOR_ATTACHMENT0 + i, target );
+				setupFrameBufferTexture( renderTargetProperties.__webglFramebuffer, renderTarget, texture, _gl.COLOR_ATTACHMENT0 + i, target );
 
-  		}
-      if ( textureNeedsGenerateMipmaps( texture, supportsMips ) ) {
+			}
 
-        generateMipmap( target, texture, renderTarget.width, renderTarget.height, renderTarget.depth );
+			if ( textureNeedsGenerateMipmaps( texture, supportsMips ) ) {
 
-      }
-      state.bindTexture( target, null );
+				generateMipmap( target, texture, renderTarget.width, renderTarget.height, renderTarget.depth );
 
-    }
+			}
+
+			state.bindTexture( target, null );
+
+		}
 
 		// Setup depth and stencil buffers
 

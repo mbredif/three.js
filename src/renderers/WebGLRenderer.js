@@ -1920,23 +1920,12 @@ function WebGLRenderer( parameters = {} ) {
 
 			const textures = renderTarget.textures;
 			for ( let i = 0, il = textures.length; i < il; i ++ ) {
-
-				const texture = renderTarget.textures[i];
+				const texture = textures[ i ];
 				const __webglTexture = properties.get( texture ).__webglTexture;
-				const attachement = _gl.COLOR_ATTACHMENT0 + i;
+				const attachment = _gl.COLOR_ATTACHMENT0 + i;
+				if ( texture.isDataTexture3D || texture.isDataTexture2DArray ) {
 
-				if ( texture.isCubeTexture ) {
-
-					const target = _gl.TEXTURE_CUBE_MAP_POSITIVE_X + activeCubeFace;
-					_gl.framebufferTexture2D( _gl.FRAMEBUFFER, attachement, target, __webglTexture, activeMipmapLevel );
-
-				} else if ( texture.isDataTexture3D || texture.isDataTexture2DArray ) {
-
-					_gl.framebufferTextureLayer( _gl.FRAMEBUFFER, attachement, __webglTexture, activeMipmapLevel, activeCubeFace );
-
-				} else {
-
-					_gl.framebufferTexture2D( _gl.FRAMEBUFFER, attachement, _gl.TEXTURE_2D, __webglTexture, activeMipmapLevel );
+					_gl.framebufferTextureLayer( _gl.FRAMEBUFFER, attachment, __webglTexture, activeMipmapLevel, activeCubeFace );
 
 				}
 			}
