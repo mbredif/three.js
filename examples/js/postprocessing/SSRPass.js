@@ -246,7 +246,7 @@
 			//   vertexShader: THREE.SSRBlurShader.vertexShader,
 			//   fragmentShader: THREE.SSRBlurShader.fragmentShader
 			// });
-			// this.blurMaterial3.uniforms['tDiffuse'].value = this.blurRenderTarget2.texture;
+			// this.blurMaterial3.uniforms['tDiffuse'].value = this.blurRenderTarget2.textures[0];
 			// this.blurMaterial3.uniforms['resolution'].value.set(this.width, this.height);
 			// material for rendering the depth
 
@@ -355,7 +355,7 @@
 						this.copyMaterial.uniforms[ 'tDiffuse' ].value = this.beautyRenderTarget.textures[0];
 						this.copyMaterial.blending = THREE.NoBlending;
 						this.renderPass( renderer, this.copyMaterial, this.prevRenderTarget );
-						if ( this.blur ) this.copyMaterial.uniforms[ 'tDiffuse' ].value = this.blurRenderTarget2.texture; else this.copyMaterial.uniforms[ 'tDiffuse' ].value = this.ssrRenderTarget.textures[0];
+						if ( this.blur ) this.copyMaterial.uniforms[ 'tDiffuse' ].value = this.blurRenderTarget2.textures[0]; else this.copyMaterial.uniforms[ 'tDiffuse' ].value = this.ssrRenderTarget.textures[0];
 						this.copyMaterial.blending = THREE.NormalBlending;
 						this.renderPass( renderer, this.copyMaterial, this.prevRenderTarget );
 						this.copyMaterial.uniforms[ 'tDiffuse' ].value = this.prevRenderTarget.textures[0];
@@ -367,7 +367,7 @@
 						this.copyMaterial.uniforms[ 'tDiffuse' ].value = this.beautyRenderTarget.textures[0];
 						this.copyMaterial.blending = THREE.NoBlending;
 						this.renderPass( renderer, this.copyMaterial, this.renderToScreen ? null : writeBuffer );
-						if ( this.blur ) this.copyMaterial.uniforms[ 'tDiffuse' ].value = this.blurRenderTarget2.texture; else this.copyMaterial.uniforms[ 'tDiffuse' ].value = this.ssrRenderTarget.textures[0];
+						if ( this.blur ) this.copyMaterial.uniforms[ 'tDiffuse' ].value = this.blurRenderTarget2.textures[0]; else this.copyMaterial.uniforms[ 'tDiffuse' ].value = this.ssrRenderTarget.textures[0];
 						this.copyMaterial.blending = THREE.NormalBlending;
 						this.renderPass( renderer, this.copyMaterial, this.renderToScreen ? null : writeBuffer );
 
@@ -376,13 +376,13 @@
 					break;
 
 				case SSRPass.OUTPUT.SSR:
-					if ( this.blur ) this.copyMaterial.uniforms[ 'tDiffuse' ].value = this.blurRenderTarget2.texture; else this.copyMaterial.uniforms[ 'tDiffuse' ].value = this.ssrRenderTarget.textures[0];
+					if ( this.blur ) this.copyMaterial.uniforms[ 'tDiffuse' ].value = this.blurRenderTarget2.textures[0]; else this.copyMaterial.uniforms[ 'tDiffuse' ].value = this.ssrRenderTarget.textures[0];
 					this.copyMaterial.blending = THREE.NoBlending;
 					this.renderPass( renderer, this.copyMaterial, this.renderToScreen ? null : writeBuffer );
 
 					if ( this.bouncing ) {
 
-						if ( this.blur ) this.copyMaterial.uniforms[ 'tDiffuse' ].value = this.blurRenderTarget2.texture; else this.copyMaterial.uniforms[ 'tDiffuse' ].value = this.beautyRenderTarget.textures[0];
+						if ( this.blur ) this.copyMaterial.uniforms[ 'tDiffuse' ].value = this.blurRenderTarget2.textures[0]; else this.copyMaterial.uniforms[ 'tDiffuse' ].value = this.beautyRenderTarget.textures[0];
 						this.copyMaterial.blending = THREE.NoBlending;
 						this.renderPass( renderer, this.copyMaterial, this.prevRenderTarget );
 						this.copyMaterial.uniforms[ 'tDiffuse' ].value = this.ssrRenderTarget.textures[0];

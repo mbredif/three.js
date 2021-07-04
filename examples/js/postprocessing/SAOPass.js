@@ -161,7 +161,7 @@
 			if ( this.renderToScreen ) {
 
 				this.materialCopy.blending = THREE.NoBlending;
-				this.materialCopy.uniforms[ 'tDiffuse' ].value = readBuffer.texture;
+				this.materialCopy.uniforms[ 'tDiffuse' ].value = readBuffer.textures[0];
 				this.materialCopy.needsUpdate = true;
 				this.renderPass( renderer, this.materialCopy, null );
 

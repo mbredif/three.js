@@ -722,7 +722,7 @@
 				}
 
 				// Get compute output in custom uniform
-				waterUniforms[ "heightmap" ].value = gpuCompute.getCurrentRenderTarget( heightmapVariable ).texture;
+				waterUniforms[ "heightmap" ].value = gpuCompute.getCurrentRenderTarget( heightmapVariable ).textures[0];
 
 				// Render
 				renderer.render( scene, camera );

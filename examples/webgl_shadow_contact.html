@@ -106,7 +106,7 @@
 
 				// the render target that we will use to blur the first render target
 				renderTargetBlur = new THREE.WebGLRenderTarget( 512, 512 );
-				renderTargetBlur.texture.generateMipmaps = false;
+				renderTargetBlur.textures[0].generateMipmaps = false;
 
 
 				// make a plane and make it face up
@@ -255,7 +255,7 @@
 
 				// blur vertically and draw in the main renderTarget
 				blurPlane.material = verticalBlurMaterial;
-				blurPlane.material.uniforms.tDiffuse.value = renderTargetBlur.texture;
+				blurPlane.material.uniforms.tDiffuse.value = renderTargetBlur.textures[0];
 				verticalBlurMaterial.uniforms.v.value = amount * 1 / 256;
 
 				renderer.setRenderTarget( renderTarget );

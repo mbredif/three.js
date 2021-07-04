@@ -69,7 +69,7 @@ class TAARenderPass extends SSAARenderPass {
 		if ( this.accumulateIndex >= 0 && this.accumulateIndex < jitterOffsets.length ) {
 
 			this.copyUniforms[ 'opacity' ].value = sampleWeight;
-			this.copyUniforms[ 'tDiffuse' ].value = writeBuffer.texture;
+			this.copyUniforms[ 'tDiffuse' ].value = writeBuffer.textures[0];
 
 			// render the scene multiple times, each slightly jitter offset from the last and accumulate the results.
 			const numSamplesPerFrame = Math.pow( 2, this.sampleLevel );

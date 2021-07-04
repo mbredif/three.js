@@ -1492,7 +1492,7 @@ function WebGLRenderer( parameters = {} ) {
 
 		const fog = scene.fog;
 		const environment = material.isMeshStandardMaterial ? scene.environment : null;
-		const encoding = ( _currentRenderTarget === null ) ? _this.outputEncoding : _currentRenderTarget.textures[0].encoding;
+		const encoding = ( _currentRenderTarget === null ) ? _this.outputEncoding : _currentRenderTarget.textures[ 0 ].encoding;
 		const envMap = cubemaps.get( material.envMap || environment );
 		const vertexAlphas = material.vertexColors === true && object.geometry && object.geometry.attributes.color && object.geometry.attributes.color.itemSize === 4;
 
@@ -1966,7 +1966,7 @@ function WebGLRenderer( parameters = {} ) {
 
 			try {
 
-				const texture = renderTarget.textures[0];
+				const texture = renderTarget.textures[ 0 ];
 				const textureFormat = texture.format;
 				const textureType = texture.type;
 

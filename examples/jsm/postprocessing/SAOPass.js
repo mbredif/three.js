@@ -197,7 +197,7 @@ class SAOPass extends Pass {
 		if ( this.renderToScreen ) {
 
 			this.materialCopy.blending = NoBlending;
-			this.materialCopy.uniforms[ 'tDiffuse' ].value = readBuffer.texture;
+			this.materialCopy.uniforms[ 'tDiffuse' ].value = readBuffer.textures[0];
 			this.materialCopy.needsUpdate = true;
 			this.renderPass( renderer, this.materialCopy, null );
 

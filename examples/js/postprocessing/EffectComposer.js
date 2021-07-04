@@ -30,7 +30,7 @@
 
 			this.renderTarget1 = renderTarget;
 			this.renderTarget2 = renderTarget.clone();
-			this.renderTarget2.texture.name = 'EffectComposer.rt2';
+			this.renderTarget2.textures[0].name = 'EffectComposer.rt2';
 			this.writeBuffer = this.renderTarget1;
 			this.readBuffer = this.renderTarget2;
 			this.renderToScreen = true;

@@ -1269,7 +1269,7 @@ function WebGLTextures( _gl, extensions, state, properties, capabilities, utils,
 
 			}
 
-			texture = texture.texture;
+			texture = texture.textures[ 0 ];
 
 		}
 
@@ -1283,12 +1283,12 @@ function WebGLTextures( _gl, extensions, state, properties, capabilities, utils,
 
 			if ( warnedTextureCube === false ) {
 
-				console.warn( 'THREE.WebGLTextures.safeSetTextureCube: don\'t use cube render targets as textures. Use their .texture property instead.' );
+				console.warn( 'THREE.WebGLTextures.safeSetTextureCube: don\'t use cube render targets as textures. Use .textures[0] instead.' );
 				warnedTextureCube = true;
 
 			}
 
-			texture = texture.texture;
+			texture = texture.textures[ 0 ];
 
 		}
 

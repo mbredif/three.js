@@ -286,7 +286,7 @@ class SSRPass extends Pass {
 		//   vertexShader: SSRBlurShader.vertexShader,
 		//   fragmentShader: SSRBlurShader.fragmentShader
 		// });
-		// this.blurMaterial3.uniforms['tDiffuse'].value = this.blurRenderTarget2.texture;
+		// this.blurMaterial3.uniforms['tDiffuse'].value = this.blurRenderTarget2.textures[0];
 		// this.blurMaterial3.uniforms['resolution'].value.set(this.width, this.height);
 
 		// material for rendering the depth
@@ -416,7 +416,7 @@ class SSRPass extends Pass {
 					this.renderPass( renderer, this.copyMaterial, this.prevRenderTarget );
 
 					if ( this.blur )
-						this.copyMaterial.uniforms[ 'tDiffuse' ].value = this.blurRenderTarget2.texture;
+						this.copyMaterial.uniforms[ 'tDiffuse' ].value = this.blurRenderTarget2.textures[0];
 					else
 						this.copyMaterial.uniforms[ 'tDiffuse' ].value = this.ssrRenderTarget.textures[0];
 					this.copyMaterial.blending = NormalBlending;
@@ -433,7 +433,7 @@ class SSRPass extends Pass {
 					this.renderPass( renderer, this.copyMaterial, this.renderToScreen ? null : writeBuffer );
 
 					if ( this.blur )
-						this.copyMaterial.uniforms[ 'tDiffuse' ].value = this.blurRenderTarget2.texture;
+						this.copyMaterial.uniforms[ 'tDiffuse' ].value = this.blurRenderTarget2.textures[0];
 					else
 						this.copyMaterial.uniforms[ 'tDiffuse' ].value = this.ssrRenderTarget.textures[0];
 					this.copyMaterial.blending = NormalBlending;
@@ -445,7 +445,7 @@ class SSRPass extends Pass {
 			case SSRPass.OUTPUT.SSR:
 
 				if ( this.blur )
-					this.copyMaterial.uniforms[ 'tDiffuse' ].value = this.blurRenderTarget2.texture;
+					this.copyMaterial.uniforms[ 'tDiffuse' ].value = this.blurRenderTarget2.textures[0];
 				else
 					this.copyMaterial.uniforms[ 'tDiffuse' ].value = this.ssrRenderTarget.textures[0];
 				this.copyMaterial.blending = NoBlending;
@@ -454,7 +454,7 @@ class SSRPass extends Pass {
 				if ( this.bouncing ) {
 
 					if ( this.blur )
-						this.copyMaterial.uniforms[ 'tDiffuse' ].value = this.blurRenderTarget2.texture;
+						this.copyMaterial.uniforms[ 'tDiffuse' ].value = this.blurRenderTarget2.textures[0];
 					else
 						this.copyMaterial.uniforms[ 'tDiffuse' ].value = this.beautyRenderTarget.textures[0];
 					this.copyMaterial.blending = NoBlending;

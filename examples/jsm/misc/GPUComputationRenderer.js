@@ -71,7 +71,7 @@ import {
  * gpuCompute.compute();
  *
  * // Update texture uniforms in your visualization materials with the gpu renderer output
- * myMaterial.uniforms.myTexture.value = gpuCompute.getCurrentRenderTarget( posVar ).texture;
+ * myMaterial.uniforms.myTexture.value = gpuCompute.getCurrentRenderTarget( posVar ).textures[0];
  *
  * // Do your rendering
  * renderer.render( myScene, myCamera );
@@ -261,7 +261,7 @@ class GPUComputationRenderer {
 
 						const depVar = variable.dependencies[ d ];
 
-						uniforms[ depVar.name ].value = depVar.renderTargets[ currentTextureIndex ].texture;
+						uniforms[ depVar.name ].value = depVar.renderTargets[ currentTextureIndex ].textures[0];
 
 					}
 
