@@ -72,11 +72,11 @@ class CubeCamera extends Object3D {
 
 		renderer.xr.enabled = false;
 
-		const generateMipmaps = new Array(renderTarget.textures.length);
+		const generateMipmaps = new Array( renderTarget.textures.length );
 		for ( let i = 0, il = renderTarget.textures.length; i < il; i ++ ) {
 
-			generateMipmaps[i] = renderTarget.textures[i].generateMipmaps;
-			renderTarget.textures[i].generateMipmaps = false;
+			generateMipmaps[ i ] = renderTarget.textures[ i ].generateMipmaps;
+			renderTarget.textures[ i ].generateMipmaps = false;
 
 		}
 
@@ -98,7 +98,7 @@ class CubeCamera extends Object3D {
 
 		for ( let i = 0, il = renderTarget.textures.length; i < il; i ++ ) {
 
-			renderTarget.textures[i].generateMipmaps = generateMipmaps[i];
+			renderTarget.textures[ i ].generateMipmaps = generateMipmaps[ i ];
 
 		}
 

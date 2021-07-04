@@ -4,8 +4,8 @@ class WebGLMultipleRenderTargets extends WebGLRenderTarget {
 
 	constructor( width, height, count ) {
 
-		console.warn('WebGLMultipleRenderTargets is deprecated, use WebGLRenderTarget(width, height, {count: count}) instead.');
-		super( width, height, { count : count } );
+		console.warn( 'WebGLMultipleRenderTargets is deprecated, use WebGLRenderTarget(width, height, {count: count}) instead.' );
+		super( width, height, { count: count } );
 
 	}
 

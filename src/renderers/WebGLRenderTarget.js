@@ -47,14 +47,14 @@ class WebGLRenderTarget extends EventDispatcher {
 
 	get texture() {
 
-		console.log('get WebGLRenderTarget.texture');
+		console.log( 'get WebGLRenderTarget.texture' );
 		return this.textures[ 0 ];
 
 	}
 
 	set texture( value ) {
 
-		console.log('set WebGLRenderTarget.texture');
+		console.log( 'set WebGLRenderTarget.texture' );
 		this.textures[ 0 ] = value;
 
 	}
