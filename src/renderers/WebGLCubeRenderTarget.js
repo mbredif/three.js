@@ -131,9 +131,9 @@ class WebGLCubeRenderTarget extends WebGLRenderTarget {
 
 		const currentRenderTarget = renderer.getRenderTarget();
 
-		for ( let i = 0; i < 6; i ++ ) {
+		for ( let f = 0; f < 6; f ++ ) {
 
-			renderer.setRenderTarget( this, i );
+			renderer.setRenderTarget( this, f );
 
 			renderer.clear( color, depth, stencil );
 

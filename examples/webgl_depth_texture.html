@@ -212,7 +212,7 @@
 				camera.updateProjectionMatrix();
 
 				const dpr = renderer.getPixelRatio();
-				target.setSize( window.innerWidth * dpr, window.innerHeight * dpr );
+				target.setSize( Math.floor( window.innerWidth * dpr ), Math.floor( window.innerHeight * dpr ) );
 				renderer.setSize( window.innerWidth, window.innerHeight );
 
 			}
