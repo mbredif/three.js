@@ -1204,11 +1204,15 @@ function WebGLTextures( _gl, extensions, state, properties, capabilities, utils,
 
 			if ( textureNeedsGenerateMipmaps( texture, supportsMips ) ) {
 
-				const target = renderTarget.isWebGLCubeRenderTarget ? _gl.TEXTURE_CUBE_MAP : _gl.TEXTURE_2D;
 				const webglTexture = properties.get( texture ).__webglTexture;
+				const target =
+					texture.isCubeTexture ? _gl.TEXTURE_CUBE_MAP :
+						texture.isDataTexture3D ? _gl.TEXTURE_3D :
+							texture.isDataTexture2DArray ? _gl.TEXTURE_2D_ARRAY :
+								_gl.TEXTURE_2D;
 
 				state.bindTexture( target, webglTexture );
-				generateMipmap( target, texture, renderTarget.width, renderTarget.height );
+				generateMipmap( target, texture, renderTarget.width, renderTarget.height, renderTarget.depth );
 				state.bindTexture( target, null );
 
 			}
