@@ -522,7 +522,7 @@ function WebGLTextures( _gl, extensions, state, properties, capabilities, utils,
 		let mipmap;
 		const mipmaps = texture.mipmaps;
 
-		if ( texture.isDepthTexture ) {
+		if ( texture.format === DepthFormat || texture.format === DepthStencilFormat ) {
 
 			// populate depth texture with dummy data
 
@@ -596,11 +596,9 @@ function WebGLTextures( _gl, extensions, state, properties, capabilities, utils,
 
 			}
 
-			//
+		}
 
-			state.texImage2D( _gl.TEXTURE_2D, 0, glInternalFormat, image.width, image.height, 0, glFormat, glType, null );
-
-		} else if ( texture.isDataTexture ) {
+		if ( texture.isDataTexture ) {
 
 			// use manually created mipmaps if available
 			// if there are no manual mipmaps
@@ -871,7 +869,7 @@ function WebGLTextures( _gl, extensions, state, properties, capabilities, utils,
 
 				const depthTexture = renderTarget.depthTexture;
 
-				if ( depthTexture && depthTexture.isDepthTexture ) {
+				if ( depthTexture && ( texture.format === DepthFormat || texture.format === DepthStencilFormat ) ) {
 
 					if ( depthTexture.type === FloatType ) {
 
@@ -945,9 +943,18 @@ function WebGLTextures( _gl, extensions, state, properties, capabilities, utils,
 	function setupDepthTexture( renderTarget ) {
 
 		const texture = renderTarget.depthTexture;
-		if ( ! ( texture && texture.isDepthTexture ) ) {
+		let attachment = undefined;
+		if ( texture.format === DepthFormat ) {
 
-			throw new Error( 'renderTarget.depthTexture must be an instance of THREE.DepthTexture' );
+			attachment = _gl.DEPTH_ATTACHMENT;
+
+		} else if ( texture.format === DepthStencilFormat ) {
+
+			attachment = _gl.DEPTH_STENCIL_ATTACHMENT;
+
+		} else {
+
+			throw new Error( 'renderTarget.depthTexture.format must be either DepthFormat or DepthStencilFormat' );
 
 		}
 
@@ -972,21 +979,6 @@ function WebGLTextures( _gl, extensions, state, properties, capabilities, utils,
 
 		}
 
-		let attachment = undefined;
-		if ( texture.format === DepthFormat ) {
-
-			attachment = _gl.DEPTH_ATTACHMENT;
-
-		} else if ( texture.format === DepthStencilFormat ) {
-
-			attachment = _gl.DEPTH_STENCIL_ATTACHMENT;
-
-		} else {
-
-			throw new Error( 'Unknown depthTexture format' );
-
-		}
-
 		if ( texture.isCubeTexture ) {
 
 			setTextureCube( texture, 0 );
@@ -998,9 +990,15 @@ function WebGLTextures( _gl, extensions, state, properties, capabilities, utils,
 
 			}
 
-		} else if ( texture.isDataTexture3D || texture.isDataTexture2DArray ) {
+		} else if ( texture.isDataTexture3D ) {
 
-			// framebufferTextureLayer is called later when layer and mipmap levels are known
+			throw new Error( 'renderTarget.depthTexture may not be a 3D texture.' );
+
+		} else if ( texture.isDataTexture2DArray ) {
+
+			setTexture2DArray( texture, 0 );
+			state.bindFramebuffer( _gl.FRAMEBUFFER, __webglFramebuffer );
+			_gl.framebufferTextureLayer( _gl.FRAMEBUFFER, attachment, textureProperties.__webglTexture, 0, 0 );
 
 		} else {
 

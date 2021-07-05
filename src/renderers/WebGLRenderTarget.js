@@ -10,13 +10,20 @@ import { Vector4 } from '../math/Vector4.js';
 */
 class WebGLRenderTarget extends EventDispatcher {
 
-	constructor( width, height, options = {} ) {
+	constructor( width, height, depth, options = {} ) {
+
+		if ( ! Number.isInteger( depth ) ) {
+
+			options = depth || options;
+			depth = 1;
+
+		}
 
 		super();
 
 		this.width = width;
 		this.height = height;
-		this.depth = 1;
+		this.depth = depth;
 
 		this.scissor = new Vector4( 0, 0, width, height );
 		this.scissorTest = false;
@@ -32,7 +39,7 @@ class WebGLRenderTarget extends EventDispatcher {
 			new Texture( undefined, options.mapping, options.wrapS, options.wrapT, options.magFilter,
 				options.minFilter, options.format, options.type, options.anisotropy, options.encoding );
 
-		texture.image = { width: width, height: height, depth: 1 };
+		texture.image = { width: width, height: height, depth: depth };
 		texture.generateMipmaps = options.generateMipmaps !== undefined ? options.generateMipmaps : false;
 		texture.minFilter = options.minFilter !== undefined ? options.minFilter : LinearFilter;
 
@@ -83,7 +90,9 @@ class WebGLRenderTarget extends EventDispatcher {
 
 	}
 
-	setSize( width, height, depth = 1 ) {
+	setSize( width, height, depth ) {
+
+		if (depth === undefined) depth = this.depth;
 
 		if ( this.width !== width || this.height !== height || this.depth !== depth ) {
 

@@ -1944,6 +1944,11 @@ function WebGLRenderer( parameters = {} ) {
 				}
 			}
 		}
+
+		const framebufferStatus = _gl.checkFramebufferStatus( _gl.FRAMEBUFFER );
+		if ( framebufferStatus !== _gl.FRAMEBUFFER_COMPLETE ) {
+			console.error( 'incomplete fbo', framebufferStatus );
+		}
 	};
 
 	this.readRenderTargetPixels = function ( renderTarget, x, y, width, height, buffer, activeCubeFaceIndex ) {
