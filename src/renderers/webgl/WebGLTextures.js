@@ -942,39 +942,33 @@ function WebGLTextures( _gl, extensions, state, properties, capabilities, utils,
 	// Setup resources for a Depth Texture for a FBO (needs an extension)
 	function setupDepthTexture( framebuffer, renderTarget ) {
 
-		const isCube = ( renderTarget && renderTarget.isWebGLCubeRenderTarget );
-		if ( isCube ) throw new Error( 'Depth Texture with cube render targets is not supported' );
-
-		state.bindFramebuffer( _gl.FRAMEBUFFER, framebuffer );
-
-		if ( ! ( renderTarget.depthTexture && renderTarget.depthTexture.isDepthTexture ) ) {
+		const texture = renderTarget.depthTexture;
+		if ( ! ( texture && texture.isDepthTexture ) ) {
 
 			throw new Error( 'renderTarget.depthTexture must be an instance of THREE.DepthTexture' );
 
 		}
 
+		const __webglTexture = properties.get( texture ).__webglTexture;
 		// upload an empty depth texture with framebuffer size
-		if ( ! properties.get( renderTarget.depthTexture ).__webglTexture ||
-				renderTarget.depthTexture.image.width !== renderTarget.width ||
-				renderTarget.depthTexture.image.height !== renderTarget.height ) {
+		if ( ! __webglTexture ||
+				texture.image.width !== renderTarget.width ||
+				texture.image.height !== renderTarget.height ) {
 
-			renderTarget.depthTexture.image.width = renderTarget.width;
-			renderTarget.depthTexture.image.height = renderTarget.height;
-			renderTarget.depthTexture.needsUpdate = true;
+			texture.image.width = renderTarget.width;
+			texture.image.height = renderTarget.height;
+			texture.needsUpdate = true;
 
 		}
 
-		setTexture2D( renderTarget.depthTexture, 0 );
-
-		const webglDepthTexture = properties.get( renderTarget.depthTexture ).__webglTexture;
-
+		let attachment = undefined;
 		if ( renderTarget.depthTexture.format === DepthFormat ) {
 
-			_gl.framebufferTexture2D( _gl.FRAMEBUFFER, _gl.DEPTH_ATTACHMENT, _gl.TEXTURE_2D, webglDepthTexture, 0 );
+			attachment = _gl.DEPTH_ATTACHMENT;
 
 		} else if ( renderTarget.depthTexture.format === DepthStencilFormat ) {
 
-			_gl.framebufferTexture2D( _gl.FRAMEBUFFER, _gl.DEPTH_STENCIL_ATTACHMENT, _gl.TEXTURE_2D, webglDepthTexture, 0 );
+			attachment = _gl.DEPTH_STENCIL_ATTACHMENT;
 
 		} else {
 
@@ -982,6 +976,30 @@ function WebGLTextures( _gl, extensions, state, properties, capabilities, utils,
 
 		}
 
+	  if ( texture.isCubeTexture ) {
+
+			setTextureCube( texture, 0 );
+			for ( let f = 0; f < 6; f ++ ) {
+
+				state.bindFramebuffer( _gl.FRAMEBUFFER, framebuffer[ f ] );
+				const target = _gl.TEXTURE_CUBE_MAP_POSITIVE_X + f;
+				_gl.framebufferTexture2D( _gl.FRAMEBUFFER, attachment, target, __webglTexture, 0 );
+
+			}
+
+		} else if ( texture.isDataTexture3D || texture.isDataTexture2DArray ) {
+
+		} else {
+
+			setTexture2D( texture, 0 );
+			state.bindFramebuffer( _gl.FRAMEBUFFER, framebuffer );
+			_gl.framebufferTexture2D( _gl.FRAMEBUFFER, attachment, _gl.TEXTURE_2D, __webglTexture, 0 );
+
+		}
+
+		if ( _gl.checkFramebufferStatus( _gl.FRAMEBUFFER ) !== _gl.FRAMEBUFFER_COMPLETE ) {
+      console.warn(framebuffer);
+    }
 	}
 
 	// Setup GL resources for a non-texture depth buffer
@@ -1085,6 +1103,7 @@ function WebGLTextures( _gl, extensions, state, properties, capabilities, utils,
 
 		}
 
+		const textures = renderTarget.textures;
 		if ( textures.length > 1 && ! capabilities.drawBuffers ) {
 
 			console.warn( 'THREE.WebGLRenderer: multiple render targets can only be used with WebGL2 or WEBGL_draw_buffers extension.' );

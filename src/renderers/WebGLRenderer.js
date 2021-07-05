@@ -10,7 +10,9 @@ import {
 	NoToneMapping,
 	LinearMipmapLinearFilter,
 	NearestFilter,
-	ClampToEdgeWrapping
+	ClampToEdgeWrapping,
+  DepthFormat,
+  DepthStencilFormat
 } from '../constants.js';
 import { Frustum } from '../math/Frustum.js';
 import { Matrix4 } from '../math/Matrix4.js';
@@ -1923,6 +1925,32 @@ function WebGLRenderer( parameters = {} ) {
 				const texture = textures[ i ];
 				const __webglTexture = properties.get( texture ).__webglTexture;
 				const attachment = _gl.COLOR_ATTACHMENT0 + i;
+				if ( texture.isDataTexture3D || texture.isDataTexture2DArray ) {
+
+					_gl.framebufferTextureLayer( _gl.FRAMEBUFFER, attachment, __webglTexture, activeMipmapLevel, activeCubeFace );
+
+				}
+      }
+      if ( false ) { //renderTarget.depthTexture ) {
+
+        const texture = renderTarget.depthTexture;
+				const __webglTexture = properties.get( texture ).__webglTexture;
+
+        let attachment = undefined;
+    		if ( texture.format === DepthFormat ) {
+
+    			attachment = _gl.DEPTH_ATTACHMENT;
+
+    		} else if ( texture.format === DepthStencilFormat ) {
+
+    			attachment = _gl.DEPTH_STENCIL_ATTACHMENT;
+
+    		} else {
+
+    			throw new Error( 'Unknown depthTexture format' );
+
+    		}
+
 				if ( texture.isDataTexture3D || texture.isDataTexture2DArray ) {
 
 					_gl.framebufferTextureLayer( _gl.FRAMEBUFFER, attachment, __webglTexture, activeMipmapLevel, activeCubeFace );
