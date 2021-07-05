@@ -11,8 +11,7 @@ import {
 	LinearMipmapLinearFilter,
 	NearestFilter,
 	ClampToEdgeWrapping,
-	DepthFormat,
-	DepthStencilFormat
+	DepthFormat
 } from '../constants.js';
 import { Frustum } from '../math/Frustum.js';
 import { Matrix4 } from '../math/Matrix4.js';
@@ -1883,6 +1882,7 @@ function WebGLRenderer( parameters = {} ) {
 						needsUpdate = true;
 
 					}
+
 				}
 
 			} else {
@@ -1931,24 +1931,31 @@ function WebGLRenderer( parameters = {} ) {
 					_gl.framebufferTextureLayer( _gl.FRAMEBUFFER, attachment, __webglTexture, activeMipmapLevel, activeCubeFace );
 
 				}
+
 			}
+
 			if ( renderTarget.depthTexture ) {
 
 				const texture = renderTarget.depthTexture;
 				if ( texture.isDataTexture3D || texture.isDataTexture2DArray ) {
 
-					let attachment = texture.format === DepthFormat ? _gl.DEPTH_ATTACHMENT : _gl.DEPTH_STENCIL_ATTACHMENT;
+					const attachment = texture.format === DepthFormat ? _gl.DEPTH_ATTACHMENT : _gl.DEPTH_STENCIL_ATTACHMENT;
 					const __webglTexture = properties.get( texture ).__webglTexture;
 					_gl.framebufferTextureLayer( _gl.FRAMEBUFFER, attachment, __webglTexture, activeMipmapLevel, activeCubeFace );
 
 				}
+
 			}
+
 		}
 
 		const framebufferStatus = _gl.checkFramebufferStatus( _gl.FRAMEBUFFER );
 		if ( framebufferStatus !== _gl.FRAMEBUFFER_COMPLETE ) {
+
 			console.error( 'incomplete fbo', framebufferStatus );
+
 		}
+
 	};
 
 	this.readRenderTargetPixels = function ( renderTarget, x, y, width, height, buffer, activeCubeFaceIndex ) {

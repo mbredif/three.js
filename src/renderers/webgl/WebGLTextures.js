@@ -854,6 +854,7 @@ function WebGLTextures( _gl, extensions, state, properties, capabilities, utils,
 			state.bindFramebuffer( _gl.FRAMEBUFFER, null );
 
 		}
+
 	}
 
 	// Setup storage for internal depth/stencil buffers and bind to correct framebuffer
@@ -867,15 +868,15 @@ function WebGLTextures( _gl, extensions, state, properties, capabilities, utils,
 
 			if ( isMultisample ) {
 
-				const depthTexture = renderTarget.depthTexture;
+				const texture = renderTarget.depthTexture;
 
-				if ( depthTexture && ( texture.format === DepthFormat || texture.format === DepthStencilFormat ) ) {
+				if ( texture && ( texture.format === DepthFormat || texture.format === DepthStencilFormat ) ) {
 
-					if ( depthTexture.type === FloatType ) {
+					if ( texture.type === FloatType ) {
 
 						glInternalFormat = _gl.DEPTH_COMPONENT32F;
 
-					} else if ( depthTexture.type === UnsignedIntType ) {
+					} else if ( texture.type === UnsignedIntType ) {
 
 						glInternalFormat = _gl.DEPTH_COMPONENT24;
 
@@ -1009,6 +1010,7 @@ function WebGLTextures( _gl, extensions, state, properties, capabilities, utils,
 		}
 
 		state.bindFramebuffer( _gl.FRAMEBUFFER, null );
+
 	}
 
 	// Setup GL resources for a non-texture depth buffer
